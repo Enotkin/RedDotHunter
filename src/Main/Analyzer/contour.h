@@ -14,6 +14,7 @@ class Contour
 {
 public:
     Contour(int frameNumber, const std::vector<cv::Point> &contour);
+    Contour(const std::vector<cv::Point> &contour);
 
     std::vector<cv::Point> getContour() const;
 

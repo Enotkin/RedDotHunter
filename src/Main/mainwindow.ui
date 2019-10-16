@@ -33,24 +33,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="binLabel">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="colorBinImage">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QCustomPlot" name="xPlot" native="true"/>
+          </item>
+          <item>
+           <widget class="QCustomPlot" name="yPlot" native="true"/>
+          </item>
+         </layout>
         </item>
        </layout>
       </item>
@@ -216,6 +206,12 @@
    <class>BinarizatorSettingsForm</class>
    <extends>QWidget</extends>
    <header>binarizatorsettingsform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -6,6 +6,7 @@ BinarizatorSettingsForm::BinarizatorSettingsForm(QWidget *parent) :
     ui(new Ui::BinarizatorSettingsForm)
 {
     ui->setupUi(this);
+    connect(ui->colorSelector, &ColorSelector::colorChanged, this, &BinarizatorSettingsForm::displayColor);
 }
 
 BinarizatorSettingsForm::~BinarizatorSettingsForm()
@@ -16,17 +17,8 @@ BinarizatorSettingsForm::~BinarizatorSettingsForm()
 void BinarizatorSettingsForm::setColor(const QColor color)
 {
     currentColor = color.toRgb();
-    displayColor(color);
-    currentColorSelector->setColor(color);
-}
-
-BinarizatorSettings BinarizatorSettingsForm::getSettings()
-{
-    BinarizatorSettings result;
-//    result.mode = ;
-    result.color = currentColor;
-//    result.coefficientHsv = currentColorSelector->
-    return result;
+    displayColor(color); 
+    ui->colorSelector->setColor(color);
 }
 
 void BinarizatorSettingsForm::displayColor(const QColor color)
@@ -37,65 +29,26 @@ void BinarizatorSettingsForm::displayColor(const QColor color)
 
     auto colorName = QString("%1%2%3").arg(color.red(), 0, 16).arg(color.green(), 0, 16).arg(color.blue(), 0, 16);
     ui->labelNameColor->setText(colorName);
-
-    if(currentColorSelector)
-        currentColorSelector->setColor(color);
 }
 
-void BinarizatorSettingsForm::setFilterMode(const BinarizatorSettings::FilterType type)
+HsvMargins BinarizatorSettingsForm::collectMargins()
 {
-    switch (type) {
-    case BinarizatorSettings::FilterType::Normal: activateNormalMode(); break;
-    case BinarizatorSettings::FilterType::Colorfull: activateColorfullMode(); break;
-    }
+    HsvMargins margins;
+    margins.setHue(ui->hueLeftMarginSpinBox->value(), ui->hueRightMarginSpinBox->value());
+    margins.setSaturation(ui->saturationLeftMarginSpinBox->value(), ui->saturationRightMarginSpinBox->value());
+    margins.setValue(ui->valueLeftMarginSpinBox->value(), ui->valueRightMarginSpinBox->value());
+    return margins;
 }
 
-void BinarizatorSettingsForm::on_comboBoxTypeFilter_activated(int index)
+BinarizatorsSettings BinarizatorSettingsForm::getSettings()
 {
-    setFilterMode(static_cast<BinarizatorSettings::FilterType>(index));
+    NormalBinarizatorSettings normalSettings;
+    normalSettings.tresholdValue = ui->tresholdSpinBox->value();
+
+    ColorBinarizatorSettings colorSettings;
+    colorSettings.color = currentColor;
+    colorSettings.hsvMargin = collectMargins();
+
+    return {colorSettings, normalSettings};
 }
 
-void BinarizatorSettingsForm::on_comboBoxColorFormat_activated(int index)
-{
-    if (currentColorSelector){
-        currentColorSelector->disconnect();
-        ui->layoutColorSelector->removeWidget(currentColorSelector);
-        delete currentColorSelector;
-    }
-    switch (static_cast<ColorMode>(index)) {
-    case ColorMode::RGB:
-        currentColorSelector = new ColorSelectorRgb();
-        break;
-    case ColorMode::HSV:
-        currentColorSelector = new ColorSelectorHsv();
-        break;
-    }
-    currentColorSelector->setColor(currentColor);
-    connect(currentColorSelector, &ColorSelector::colorChanged, this, &BinarizatorSettingsForm::displayColor);
-    ui->layoutColorSelector->addWidget(currentColorSelector);
-}
-
-void BinarizatorSettingsForm::activateNormalMode()
-{
-    ui->comboBoxTypeFilter->setCurrentIndex(static_cast<int>(BinarizatorSettings::FilterType::Normal));
-    ui->widgetColorSelect->hide();
-    displayColor(QColor(Qt::white).toRgb());
-}
-
-void BinarizatorSettingsForm::activateColorfullMode()
-{
-    ui->comboBoxTypeFilter->setCurrentIndex(static_cast<int>(BinarizatorSettings::FilterType::Colorfull));
-    ui->widgetColorSelect->show();
-    displayColor(currentColor.toRgb());
-
-
-    if (currentColorSelector){
-        currentColorSelector->disconnect();
-        ui->layoutColorSelector->removeWidget(currentColorSelector);
-        delete currentColorSelector;
-    }
-    currentColorSelector = new ColorSelectorRgb();
-    currentColorSelector->setColor(currentColor);
-    connect(currentColorSelector, &ColorSelector::colorChanged, this, &BinarizatorSettingsForm::displayColor);
-    ui->layoutColorSelector->addWidget(currentColorSelector);
-}

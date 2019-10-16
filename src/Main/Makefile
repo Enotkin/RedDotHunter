@@ -248,6 +248,7 @@ Makefile: Main.pro C:\Qt\5.12.1\msvc2017\mkspecs\win32-msvc\qmake.conf C:\Qt\5.1
 		C:\Qt\5.12.1\msvc2017\mkspecs\features\yacc.prf \
 		C:\Qt\5.12.1\msvc2017\mkspecs\features\lex.prf \
 		Main.pro \
+		C:\Qt\5.12.1\msvc2017\lib\Qt5PrintSupport.prl \
 		C:\Qt\5.12.1\msvc2017\lib\Qt5Widgets.prl \
 		C:\Qt\5.12.1\msvc2017\lib\Qt5Gui.prl \
 		C:\Qt\5.12.1\msvc2017\lib\Qt5Core.prl \
@@ -424,6 +425,7 @@ C:\Qt\5.12.1\msvc2017\mkspecs\features\exceptions.prf:
 C:\Qt\5.12.1\msvc2017\mkspecs\features\yacc.prf:
 C:\Qt\5.12.1\msvc2017\mkspecs\features\lex.prf:
 Main.pro:
+C:\Qt\5.12.1\msvc2017\lib\Qt5PrintSupport.prl:
 C:\Qt\5.12.1\msvc2017\lib\Qt5Widgets.prl:
 C:\Qt\5.12.1\msvc2017\lib\Qt5Gui.prl:
 C:\Qt\5.12.1\msvc2017\lib\Qt5Core.prl:

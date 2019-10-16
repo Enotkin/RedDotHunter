@@ -4,9 +4,8 @@
 #include <QWidget>
 #include <QColor>
 
-#include "colorselectorhsv.h"
-#include "colorselectorrgb.h"
-#include "binarizatorsettings.h"
+#include "colorselector.h"
+#include "binarizatorssettings.h"
 
 namespace Ui {
 class BinarizatorSettingsForm;
@@ -22,34 +21,17 @@ public:
 
     void setColor(const QColor color);
 
-    BinarizatorSettings getSettings();
+    BinarizatorsSettings getSettings();
 
-private slots:
-    void on_comboBoxTypeFilter_activated(int index);
-
-    void on_comboBoxColorFormat_activated(int index);
+public slots:
+    void displayColor(const QColor color);
 
 private:
-    enum class ColorMode{
-        RGB,
-        HSV
-    };
-
     Ui::BinarizatorSettingsForm *ui;
 
     QColor currentColor;
-    ColorMode colorMode = ColorMode::RGB;
-    ColorSelector *currentColorSelector = nullptr;
 
-    void displayColor(const QColor color);
-    void setFilterMode(const BinarizatorSettings::FilterType type);
-
-    void activateNormalMode();
-    void activateColorfullMode();
-
-    void activate();
-    void deactivate();
-
+    HsvMargins collectMargins();
 
 };
 

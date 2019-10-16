@@ -6,6 +6,11 @@ ColorSelector::ColorSelector(QWidget *parent) :
     ui(new Ui::ColorSelector)
 {
     ui->setupUi(this);
+    setRanges(QVector<int>{359, 255, 255});
+    setLabelText(QVector<QString>{"Цвет", "Насыщенность", "Яркость"});
+    ui->spinBoxSecond->setValue(255);
+    ui->spinBoxThird->setValue(255);
+    emitColor();
 }
 
 ColorSelector::~ColorSelector()
@@ -24,6 +29,16 @@ void ColorSelector::setColor(QColor color)
     ui->horizontalSliderFirst->setValue(firstValue);
     ui->horizontalSliderSecond->setValue(secondValue);
             ui->horizontalSliderThird->setValue(thirdValue);
+}
+
+std::tuple<int, int, int> ColorSelector::disassemblyColor(const QColor &color)
+{
+    return std::make_tuple(color.hue(), color.saturation(), color.value());
+}
+
+QColor ColorSelector::assemblyColor(int arg1, int arg2, int arg3)
+{
+    return QColor::fromHsv(arg1, arg2, arg3);
 }
 
 void ColorSelector::setLabelText(QVector<QString> texts)

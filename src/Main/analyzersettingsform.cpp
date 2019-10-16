@@ -11,7 +11,7 @@ AnalyzerSettingsForm::AnalyzerSettingsForm(QWidget *parent) :
     ui->distantSpinBox->setValue(defaultSetting.trackDetectorSettings.delta);
     ui->lifeTimeSpinBox->setValue(defaultSetting.trackDetectorSettings.lifeTime);
 
-    ui->tresholdSpinBox->setValue(defaultSetting.binarizatorSettings.thresholdValue);
+//    ui->tresholdSpinBox->setValue(defaultSetting.binarizatorSettings.thresholdValue);
 }
 
 AnalyzerSettingsForm::~AnalyzerSettingsForm()
@@ -26,12 +26,10 @@ RedAnalyzerSettings AnalyzerSettingsForm::getSettings()
     trackSettings.delta = ui->distantSpinBox->value();
     trackSettings.lifeTime = ui->lifeTimeSpinBox->value();
 
-    BinarizatorSettings binarizatorSettings;
-    binarizatorSettings.thresholdValue = ui->tresholdSpinBox->value();
+    BinarizatorsSettings binarizatorSettings;
 
     RedAnalyzerSettings resultSetting;
-    resultSetting.binarizatorSettings = binarizatorSettings;
-    resultSetting.trackDetectorSettings = trackSettings;
+
 
     return resultSetting;
 }

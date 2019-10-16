@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 CONFIG += c++17
 
@@ -18,37 +18,43 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     Analyzer/Binarizator/binarizator.cpp \
     Analyzer/Binarizator/binarizatorsettingsform.cpp \
+    Analyzer/Binarizator/colorbinarizator.cpp \
     Analyzer/Binarizator/colorselector.cpp \
-    Analyzer/Binarizator/colorselectorhsv.cpp \
-    Analyzer/Binarizator/colorselectorrgb.cpp \
+    Analyzer/Binarizator/normalbinarizator.cpp \
+    Analyzer/backgroundanalyzer.cpp \
     Analyzer/branch.cpp \
     Analyzer/branchselector.cpp \
     Analyzer/contour.cpp \
     Analyzer/contourseacher.cpp \
     Analyzer/objecttrack.cpp \
+    Analyzer/rectsubtractor.cpp \
     Analyzer/redanalyzer.cpp \
     Analyzer/trackdetector.cpp \
     analyzersettingsform.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    qcustomplot.cpp
 
 HEADERS += \
     Analyzer/Binarizator/binarizator.h \
-    Analyzer/Binarizator/binarizatorsettings.h \
     Analyzer/Binarizator/binarizatorsettingsform.h \
+    Analyzer/Binarizator/binarizatorssettings.h \
+    Analyzer/Binarizator/colorbinarizator.h \
     Analyzer/Binarizator/colorselector.h \
-    Analyzer/Binarizator/colorselectorhsv.h \
-    Analyzer/Binarizator/colorselectorrgb.h \
+    Analyzer/Binarizator/normalbinarizator.h \
+    Analyzer/backgroundanalyzer.h \
     Analyzer/branch.h \
     Analyzer/branchselector.h \
     Analyzer/contour.h \
     Analyzer/contourseacher.h \
     Analyzer/objecttrack.h \
+    Analyzer/rectsubtractor.h \
     Analyzer/redanalyzer.h \
     Analyzer/trackdetector.h \
     Analyzer/trackdetectorsettings.h \
     analyzersettingsform.h \
-    mainwindow.h
+    mainwindow.h \
+    qcustomplot.h
 
 FORMS += \
     Analyzer/Binarizator/binarizatorsettingsform.ui \

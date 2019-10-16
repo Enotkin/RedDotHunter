@@ -1,0 +1,43 @@
+#include "backgrounanalyzer.h"
+
+BackgrounAnalyzer::BackgrounAnalyzer()
+{
+
+}
+
+bool BackgrounAnalyzer::isBackgroundDark(const cv::Mat &img, const std::vector<cv::Point> &contour)
+{
+    auto rect = cv::boundingRect(contour);
+    auto increasedRect = expandRect(rect, rectExpandValue);
+    if (isImageContainsRect(img, increasedRect)){
+        auto croppedImage = img(increasedRect);
+        return calculateAverageBrightness(croppedImage) < maxAverageBrightness ? true : false;
+    } else {
+        cv::Rect availableRect = increasedRect & cv::Rect(0, 0, img.cols, img.rows);
+        cv::Rect outOfRangeRect()
+        int outArea = outOfRangeRect.width * outOfRangeRect.height;
+        int rectArea = increasedRect.width * increasedRect.height;
+        double difference = outArea / rectArea;
+
+        auto croppedImage = img(availableRect);
+        auto averageBrightness = calculateAverageBrightness(croppedImage) * (1 - difference);
+        return averageBrightness < maxAverageBrightness ? true : false;
+    }
+}
+
+cv::Rect BackgrounAnalyzer::expandRect(const cv::Rect &srcRect, double expandValue) const
+{
+    double step = expandValue - 1;
+    if (step <= 0)
+        step = 0.1;
+    cv::Rect increasedRect = srcRect + cv::Size(static_cast<int>(srcRect.width * step),static_cast<int>(srcRect.height * step));
+    return increasedRect;
+}
+
+double BackgrounAnalyzer::calculateAverageBrightness(const cv::Mat &img) const
+{
+    auto grayImg = img;
+    cv::cvtColor(img, grayImg, cv::COLOR_BGR2GRAY);
+    auto average = cv::mean(grayImg);
+    return average[0];
+}

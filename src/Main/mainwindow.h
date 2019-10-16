@@ -6,9 +6,13 @@
 #include <QDebug>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include <QTime>
 
 #include <memory>
 #include "asmOpenCV.h"
+#include "qcustomplot.h"
+#include "Analyzer/Binarizator/colorbinarizator.h"
+#include "Analyzer/Binarizator/normalbinarizator.h"
 #include "Analyzer/redanalyzer.h"
 #include "Analyzer/Binarizator/binarizatorsettingsform.h"
 
@@ -43,12 +47,12 @@ private:
     QList<QFileInfo>::iterator currentImgInfo = nullptr;
     RedAnalyzer analyzer;
 
-
     bool iteratorCheck(const QList<QFileInfo>::iterator &it);
-    void displayImage(const QFileInfo imgInfo);
+    void displayImage(const QList<QFileInfo>::iterator &it);
 
-    QImage binImage(const QImage &image);
-    QImage colorBinImage(const QImage &image);
+    void setupPlot(QCustomPlot * const plot);
+
+    std::tuple<QVector<double>, QVector<double>, QVector<double>> separateGraphData(const std::vector<std::vector<cv::Point>> &data);
 
 };
 #endif // MAINWINDOW_H

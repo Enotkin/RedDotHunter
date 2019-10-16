@@ -20,8 +20,8 @@ public:
     void setColor(QColor color);
 
 protected:
-    virtual QColor assemblyColor(int arg1, int arg2, int arg3) = 0;
-    virtual std::tuple<int, int, int> disassemblyColor(const QColor &color) = 0;
+    QColor assemblyColor(int arg1, int arg2, int arg3);
+    std::tuple<int, int, int> disassemblyColor(const QColor &color);
     void setLabelText(QVector<QString> texts);
     void setRanges(QVector<int> ranges);
 
