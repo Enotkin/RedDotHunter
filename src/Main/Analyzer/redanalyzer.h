@@ -55,6 +55,7 @@ private:
     std::list<Contour> objectTracks;
     const int increaseStep = 3;
     const int maxAverageBrightness = 50;
+    const int maxContourArea = 150;
 
     std::vector<std::vector<cv::Point>> findContours(const cv::Mat &img);
 
@@ -63,6 +64,13 @@ private:
     std::vector<std::vector<cv::Point>> getContoursContainedInRect(const cv::Rect &rect, const std::vector<std::vector<cv::Point> > &contours);
 
     cv::Rect  expandRect(const cv::Rect &srcRect, const double expandValue);
+
+    std::vector<std::vector<cv::Point>> filterBackground(const cv::Mat &img, const std::vector<std::vector<cv::Point>> &contours);
+    std::vector<std::vector<cv::Point>> filterNearbyContours(const std::vector<std::vector<cv::Point>> &normalContours,
+                                                             const std::vector<std::vector<cv::Point>> &colorContours);
+    std::vector<std::vector<cv::Point>> filterArea(const std::vector<std::vector<cv::Point>> &contours);
+
+    const std::vector<std::vector<cv::Point> > findNearbyContours(const std::vector<cv::Point> &contour, const std::vector<std::vector<cv::Point>> &otherContours);
 };
 
 #endif // REDANALYZER_H

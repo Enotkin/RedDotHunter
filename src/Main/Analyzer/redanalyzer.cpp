@@ -14,6 +14,11 @@ std::vector<std::vector<cv::Point>> RedAnalyzer::getRedDotsCoordinate(const QFil
         framePoints.push_back(points);
         qDebug()<<imgInfo.fileName();
     }
+    int findedPoints = 0;
+    for(const auto &points : framePoints){
+        findedPoints += static_cast<int>(points.size());
+    }
+    qDebug()<<"Всего найдено точек" << findedPoints;
     return framePoints;
 }
 
@@ -41,15 +46,46 @@ std::vector<std::vector<cv::Point>> RedAnalyzer::confirmContours(const cv::Mat &
                                                                  const std::vector<std::vector<cv::Point>> &normalContours,
                                                                  const std::vector<std::vector<cv::Point>> &colorContours)
 {
-    std::vector<std::vector<cv::Point>> confirmedContours;
-    for (const auto &contour : normalContours){
-        auto rect = cv::boundingRect(contour);
-        auto increasedRect = expandRect(rect, increaseStep);
-        auto nearbyContours = getContoursContainedInRect(increasedRect, colorContours);
-        if (!nearbyContours.empty() && checkBackground(img, contour))
-            confirmedContours.push_back(contour);
-    }
+    std::vector<std::vector<cv::Point>> confirmedContours = filterArea(normalContours);
+    confirmedContours = filterNearbyContours(confirmedContours, colorContours);
+    confirmedContours = filterBackground(img, confirmedContours);
     return confirmedContours;
+}
+
+std::vector<std::vector<cv::Point> > RedAnalyzer::filterBackground(const cv::Mat &img, const std::vector<std::vector<cv::Point> > &contours)
+{
+    std::vector<std::vector<cv::Point>> filtredContours;
+    std::copy_if(contours.begin(), contours.end(), std::back_inserter(filtredContours), [&img, this](const auto &contour){
+        return checkBackground(img, contour);
+    });
+    return filtredContours;
+}
+
+std::vector<std::vector<cv::Point> > RedAnalyzer::filterNearbyContours(const std::vector<std::vector<cv::Point> > &normalContours, const std::vector<std::vector<cv::Point> > &colorContours)
+{
+    std::vector<std::vector<cv::Point>> filtredContours;
+    std::copy_if(normalContours.begin(), normalContours.end(), std::back_inserter(filtredContours), [this, &colorContours](const auto &contour){
+        auto nearbyContours = findNearbyContours(contour, colorContours);
+        return !nearbyContours.empty();
+    });
+    return filtredContours;
+}
+
+const std::vector<std::vector<cv::Point>> RedAnalyzer::findNearbyContours(const std::vector<cv::Point> &contour, const std::vector<std::vector<cv::Point>> &otherContours)
+{
+    auto rect = cv::boundingRect(contour);
+    auto increasedRect = expandRect(rect, increaseStep);
+    auto nearbyContours = getContoursContainedInRect(increasedRect, otherContours);
+    return nearbyContours;
+}
+
+std::vector<std::vector<cv::Point> > RedAnalyzer::filterArea(const std::vector<std::vector<cv::Point> > &contours)
+{
+    std::vector<std::vector<cv::Point>> filtredContours;
+    std::copy_if(contours.begin(), contours.end(), std::back_inserter(filtredContours), [&](const auto &contour){
+        return cv::contourArea(contour) <= maxContourArea;
+    });
+    return filtredContours;
 }
 
 std::vector<std::vector<cv::Point>> RedAnalyzer::getContoursContainedInRect(const cv::Rect &rect, const std::vector<std::vector<cv::Point>> &contours)
@@ -71,6 +107,8 @@ cv::Rect RedAnalyzer::expandRect(const cv::Rect &srcRect, const double expandVal
     cv::Rect increasedRect = srcRect + cv::Size(static_cast<int>(srcRect.width * step),static_cast<int>(srcRect.height * step));
     return increasedRect;
 }
+
+
 
 cv::Mat RedAnalyzer::colorBinarize(const cv::Mat &src)
 {
@@ -95,8 +133,6 @@ bool RedAnalyzer::checkBackground(const cv::Mat &img, const std::vector<cv::Poin
 {
     return backgroundAnalyzer.isDarkBackground(img, contour);
 }
-
-
 
 void RedAnalyzer::setSettings(const RedAnalyzerSettings settings)
 {
