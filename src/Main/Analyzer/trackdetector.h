@@ -1,11 +1,8 @@
 #ifndef CROWNCHARGEDETECTOR_H
 #define CROWNCHARGEDETECTOR_H
 
-#include "contour.h"
 #include <set>
 #include <algorithm>
-#include "branch.h"
-#include "objecttrack.h"
 #include "branchselector.h"
 
 class TrackDetector
@@ -15,22 +12,16 @@ public:
     TrackDetector(const TrackDetectorSettings &settings);
     ~TrackDetector();
 
-    void findTrack(std::list<Contour> &contours);
-    std::list<ObjectTrack> getTracks() const;
+    std::vector<std::vector<cv::Point> > separatePoints(const std::vector<std::vector<cv::Point>> &points);
     void setSettings(TrackDetectorSettings settings);
 
 private:
-    std::list<ObjectTrack> lastDetectedCharges;
-    std::list<ObjectTrack> detectedCharges;
-    std::list<Branch> branches;
+    std::vector<cv::Point> detectedCharges;
+    std::vector<Branch> branches;
     TrackDetectorSettings suspetctSettings;
 
-    std::list<BranchSelector> createSelectors(const std::list<Contour> &contours);
-    void branchDistribution(std::list<BranchSelector> &selectorList, std::list<Branch> &branchList);
-    void copyConfirmedCharges(const std::list<Branch> &branches);
-
-    bool isConfirmed(const Branch &branch);
-
+    std::vector<BranchSelector> createSelectors(const std::vector<cv::Point> &points);
+    void branchDistribution(std::vector<BranchSelector> &selectorList, std::vector<Branch> &branchList);
 };
 
 #endif // CROWNCHARGEDETECTOR_H

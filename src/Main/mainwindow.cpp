@@ -22,11 +22,15 @@ void MainWindow::on_SelectFolderPushButton_clicked()
         return;
     analyzer.setSettings(ui->generalSettings->getSettings());
     auto result = analyzer.getRedDotsCoordinate(imagesInfo);
+    TrackDetector detector;
+    auto tracks = detector.separatePoints(result);
+
     auto [xData, yData, numbers] = separateGraphData(result);
     ui->xPlot->xAxis->setRange(0, result.size());
     ui->yPlot->xAxis->setRange(0, result.size());
 
     ui->xPlot->graph(0)->addData(numbers, xData);
+
     ui->yPlot->graph(0)->addData(numbers, yData);
 
     ui->xPlot->replot();
@@ -34,7 +38,6 @@ void MainWindow::on_SelectFolderPushButton_clicked()
 
     ui->horizontalSlider->setRange(1, result.size());
     ui->imageNumSpinBox->setRange(1, result.size());
-    qDebug()<< result.size();
 }
 
 std::tuple<QVector<double>, QVector<double>, QVector<double>> MainWindow::separateGraphData(const std::vector<std::vector<cv::Point> > &data)

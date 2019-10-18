@@ -15,6 +15,7 @@
 #include "Analyzer/Binarizator/normalbinarizator.h"
 #include "Analyzer/redanalyzer.h"
 #include "Analyzer/Binarizator/binarizatorsettingsform.h"
+#include "Analyzer/trackdetector.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

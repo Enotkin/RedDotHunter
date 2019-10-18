@@ -1,0 +1,11 @@
+#include "branchdetectorr.h"
+
+//ObjectTrack::ObjectTrack(QObject *parent) : QObject(parent)
+//{
+
+//}
+
+BranchDetectorr::BranchDetectorr(const Contours &contours/*, QObject *parent*/)
+{
+    this->contours = contours;
+}

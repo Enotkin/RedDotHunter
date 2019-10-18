@@ -2,7 +2,6 @@
 #define BRANCHESELECTOR_H
 #include <functional>
 
-#include "contour.h"
 #include "branch.h"
 
 using BrancheRef = std::reference_wrapper<Branch>;
@@ -10,19 +9,18 @@ using BrancheRef = std::reference_wrapper<Branch>;
 class BranchSelector
 {
 public:
-    BranchSelector(const Contour &contour);
-    void addBranche(BrancheRef newBranche);
+    BranchSelector(const cv::Point &point);
+    void addBrancheRef(BrancheRef newBranche);
     void selectionBranch();
-    Contour getContour() const;
+    cv::Point getPoint() const;
 
     bool isSelectingEnd() const;
 
     std::list<BrancheRef> getBranches() const;
 
 private:
-    Contour contour;
+    cv::Point point;
     std::list<BrancheRef> branches;
-    void branchSort();
     bool selectingEnd = false;
     template<class Comparator>
     constexpr auto branchesCmp(Comparator cmp){

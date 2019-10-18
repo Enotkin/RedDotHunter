@@ -5,18 +5,16 @@
 
 #include <QColor>
 
-#include "contour.h"
 #include "opencv2/highgui.hpp"
 #include "opencv2/video.hpp"
 
-class ObjectTrack
+class BranchDetectorr
 {
 public:
-    ObjectTrack(const Contours &contours);
+    BranchDetectorr() = default;
 
 private:
-    Contours contours;
-    std::vector<QPoint> coordinates;
+
 };
 
 #endif // OBJECTTRZCK_H

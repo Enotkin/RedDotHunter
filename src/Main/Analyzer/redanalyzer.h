@@ -11,16 +11,19 @@
 #include "Binarizator/binarizator.h"
 #include "Binarizator/colorbinarizator.h"
 #include "Binarizator/normalbinarizator.h"
-#include "trackdetector.h"
-#include "objecttrack.h"
 #include "asmOpenCV.h"
 #include "backgroundanalyzer.h"
 
 struct RedAnalyzerSettings
 {
     BinarizatorsSettings binarizatorSettings;
-    TrackDetectorSettings trackDetectorSettings;
+//    TrackDetectorSettings trackDetectorSettings;
 };
+
+using Contour = std::vector<cv::Point>;
+using Contours = std::vector<Contour>;
+
+using Points = std::vector<cv::Point>;
 
 class RedAnalyzer : public QObject
 {
@@ -28,49 +31,31 @@ class RedAnalyzer : public QObject
 public:
     explicit RedAnalyzer(QObject *parent = nullptr);
 
-    std::vector<std::vector<cv::Point> > getRedDotsCoordinate(const QFileInfoList &imagesInfo);
-    std::vector<cv::Point> getPoints(const cv::Mat &img);
-
-    cv::Mat colorBinarize (const cv::Mat &src);
-    cv::Mat normalBinarize (const cv::Mat &src);
-
-    bool checkBackground(const cv::Mat &img, const std::vector<cv::Point> &contour);
-
-    std::vector<std::vector<cv::Point> > confirmContours(const cv::Mat &img, const std::vector<std::vector<cv::Point> > &normalContours, const std::vector<std::vector<cv::Point> > &colorContours);
-
-    cv::Mat drawContour(const cv::Mat &img);
-
-//    Contours getContours(const QImage &image);
+    Contours getRedDotsCoordinate(const QFileInfoList &imagesInfo);
+    Points getPoints(const cv::Mat &img);
 
     void setSettings(const RedAnalyzerSettings settings);
 
-
-signals:
-    void progress(int);
-
 private:
-    QFileInfoList imagesInfo;
     RedAnalyzerSettings settings;
     BackgroundAnalyzer backgroundAnalyzer;
-    std::list<Contour> objectTracks;
     const int increaseStep = 3;
     const int maxAverageBrightness = 50;
     const int maxContourArea = 150;
 
-    std::vector<std::vector<cv::Point>> findContours(const cv::Mat &img);
-
-    std::list<ObjectTrack> tracks;
-    
-    std::vector<std::vector<cv::Point>> getContoursContainedInRect(const cv::Rect &rect, const std::vector<std::vector<cv::Point> > &contours);
-
-    cv::Rect  expandRect(const cv::Rect &srcRect, const double expandValue);
-
-    std::vector<std::vector<cv::Point>> filterBackground(const cv::Mat &img, const std::vector<std::vector<cv::Point>> &contours);
-    std::vector<std::vector<cv::Point>> filterNearbyContours(const std::vector<std::vector<cv::Point>> &normalContours,
-                                                             const std::vector<std::vector<cv::Point>> &colorContours);
-    std::vector<std::vector<cv::Point>> filterArea(const std::vector<std::vector<cv::Point>> &contours);
-
-    const std::vector<std::vector<cv::Point> > findNearbyContours(const std::vector<cv::Point> &contour, const std::vector<std::vector<cv::Point>> &otherContours);
+    cv::Mat drawContour(const cv::Mat &img);
+    cv::Mat colorBinarize (const cv::Mat &src);
+    cv::Mat normalBinarize (const cv::Mat &src);
+    cv::Rect expandRect(const cv::Rect &srcRect, const double expandValue);
+    cv::Point getCenterPoint(const Contour &contour);
+    bool checkBackground(const cv::Mat &img, const Contour &contour);
+    Contours findContours(const cv::Mat &img);
+    Contours getContoursContainedInRect(const cv::Rect &rect, const Contours &contours);
+    Contours confirmContours(const cv::Mat &img, const Contours &normalContours, const Contours &colorContours);
+    Contours filterBackground(const cv::Mat &img, const Contours &contours);
+    Contours filterNearbyContours(const Contours &normalContours, const Contours &colorContours);
+    Contours filterArea(const Contours &contours);
+    Contours findNearbyContours(const Contour &contour, const Contours &otherContours);
 };
 
 #endif // REDANALYZER_H

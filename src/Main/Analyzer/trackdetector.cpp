@@ -11,87 +11,74 @@ TrackDetector::~TrackDetector()
         branches.clear();
 }
 
-void TrackDetector::findTrack(std::list<Contour> &contours)
+std::vector<std::vector<cv::Point> >  TrackDetector::separatePoints(const std::vector<std::vector<cv::Point> > &points)
 {
-    contours.sort([](const Contour &a, const Contour &b){ return a.getArea() > b.getArea();});
+    for (const auto &pointsAtImg : points){
+        //Если нет веток, то все точки это начало новых веток
+        if (branches.empty()){
+            for(const auto &point : pointsAtImg)
+                branches.emplace_back(point, suspetctSettings);
+            continue;
+        }
 
-    //Если нет веток, то все контура это начало новых веток
-    if (branches.empty()){
-        for(const auto &contour : contours)
-            branches.emplace_back(contour, suspetctSettings);
-        return;
+        //Создание селекторов
+        auto selectors = createSelectors(pointsAtImg);
+
+        //Распределение веток для селекторов
+        branchDistribution(selectors, branches);
+
+        //Выбор веток селекторами
+        std::for_each(selectors.begin(), selectors.end(), [](auto &selector){selector.selectionBranch();});
+
+        //Конец раунда, уменьшение времени жизни обездоленых
+        std::for_each(branches.begin(), branches.end(), [](auto &branche){branche.endRound();});
+
+        //очистка всякого
+        //Удаление шумовых разрядов из общей кучи веток
+        std::remove_if(std::begin(branches), std::end(branches), [](const auto &branche){
+            return branche.isNoise();});
+
+
+//        //Дополнение веток, селекторам без пар
+//        for (auto &selector : selectors){
+//            if (!selector.isSelectingEnd()){
+//                Branch branche(selector.getPoint(), suspetctSettings);
+//                branches.push_back(branche);
+//            }
+////                branches.emplace_back(selector.getPoint(), suspetctSettings);
+//        }
+
+        //Сортировка веток
+        std::sort(std::begin(branches), std::end(branches), [](const Branch &a, const Branch &b){ return a.length() > b.length();});
     }
 
-    //Создание селекторов
-    auto selectors = createSelectors(contours);
 
-    //Распределение веток для селекторов
-    branchDistribution(selectors, branches);
+    std::vector<std::vector<cv::Point>> result;
+    std::transform(std::begin(branches), std::end(branches), std::back_inserter(result), [](const auto &branche){
+        return branche.getPoints();
+    });
+    return result;
 
-    //Выбор веток селекторами
-    std::for_each(selectors.begin(), selectors.end(), [](auto &selector){selector.selectionBranch();});
-
-    //Конец раунда, уменьшение времени жизни обездоленых
-    std::for_each(branches.begin(), branches.end(), [](auto &branche){branche.endRound();});
-
-    //Копирование подтверждённых зарядов
-    copyConfirmedCharges(branches);
-
-    //Удаление шумовых разрядов из общей кучи веток
-    branches.remove_if([](const auto &suspectCrownCharge){
-        return suspectCrownCharge.isNoise();});
-
-    branches.remove_if([](const auto &suspectCrownCharge){
-        return suspectCrownCharge.isConfirmedCharge();});
-
-    //Дополнение веток, селекторами без пар
-    for (auto &selector : selectors){
-        if (!selector.isSelectingEnd())
-            branches.emplace_back(selector.getContour(), suspetctSettings);
-    }
-
-    //Сортировка веток
-    branches.sort([](const Branch &a, const Branch &b){ return a.length() > b.length();});
 }
 
-std::list<BranchSelector> TrackDetector::createSelectors(const std::list<Contour> &contours)
+std::vector<BranchSelector> TrackDetector::createSelectors(const std::vector<cv::Point> &points)
 {
-    std::list<BranchSelector> selectors;
-    for (auto &contour : contours) {
-        selectors.emplace_back(contour);
+    std::vector<BranchSelector> selectors;
+    for (const auto &point : points) {
+        selectors.emplace_back(point);
     }
     return selectors;
 }
 
-void TrackDetector::branchDistribution(std::list<BranchSelector> &selectorList, std::list<Branch> &branchList)
+void TrackDetector::branchDistribution(std::vector<BranchSelector> &selectorList, std::vector<Branch> &branchList)
 {
     for (auto &selector : selectorList)
         for (auto &branche : branchList)
-            if(branche.checkCompatibility(selector.getContour()))
-                selector.addBranche(branche);
-}
-
-void TrackDetector::copyConfirmedCharges(const std::list<Branch> &branches)
-{
-    lastDetectedCharges.clear();
-    for (const auto &branche : branches){
-        if (branche.isConfirmedCharge())
-            lastDetectedCharges.push_back(branche.getCrownCharge());
-    }
-    std::copy(lastDetectedCharges.begin(), lastDetectedCharges.end(), std::back_inserter(detectedCharges));
-}
-
-std::list<ObjectTrack> TrackDetector::getTracks() const
-{
-    return detectedCharges;
+            if(branche.checkCompatibility(selector.getPoint()))
+                selector.addBrancheRef(branche);
 }
 
 void TrackDetector::setSettings(TrackDetectorSettings settings)
 {
     suspetctSettings = settings;
-}
-
-bool TrackDetector::isConfirmed(const Branch &branch)
-{
-    return branch.isConfirmedCharge();
 }

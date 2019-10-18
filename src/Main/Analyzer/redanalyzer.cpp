@@ -5,7 +5,7 @@ RedAnalyzer::RedAnalyzer(QObject *parent) : QObject(parent)
 
 }
 
-std::vector<std::vector<cv::Point>> RedAnalyzer::getRedDotsCoordinate(const QFileInfoList &imagesInfo)
+Contours RedAnalyzer::getRedDotsCoordinate(const QFileInfoList &imagesInfo)
 {
     std::vector<std::vector<cv::Point>> framePoints;
     for(const auto &imgInfo : imagesInfo){
@@ -23,7 +23,7 @@ std::vector<std::vector<cv::Point>> RedAnalyzer::getRedDotsCoordinate(const QFil
 }
 
 
-std::vector<cv::Point> RedAnalyzer::getPoints(const cv::Mat &img)
+Points RedAnalyzer::getPoints(const cv::Mat &img)
 {
     auto normalBinImage = normalBinarize(img);
     auto colorBinImage = colorBinarize(img);
@@ -35,16 +35,13 @@ std::vector<cv::Point> RedAnalyzer::getPoints(const cv::Mat &img)
     auto confirmedContours = confirmContours(img, normalContours, colorContours);
     std::vector<cv::Point> resultPoints;
     std::transform(std::begin(confirmedContours), std::end(confirmedContours), std::back_inserter(resultPoints),
-                   [](const auto &contour){
-       Contour contr(contour);
-       return contr.getCenterMass();
+                   [this](const auto &contour){
+        return getCenterPoint(contour);
     });
     return resultPoints;
 }
 
-std::vector<std::vector<cv::Point>> RedAnalyzer::confirmContours(const cv::Mat &img,
-                                                                 const std::vector<std::vector<cv::Point>> &normalContours,
-                                                                 const std::vector<std::vector<cv::Point>> &colorContours)
+Contours RedAnalyzer::confirmContours(const cv::Mat &img, const Contours &normalContours, const Contours &colorContours)
 {
     std::vector<std::vector<cv::Point>> confirmedContours = filterArea(normalContours);
     confirmedContours = filterNearbyContours(confirmedContours, colorContours);
@@ -52,7 +49,7 @@ std::vector<std::vector<cv::Point>> RedAnalyzer::confirmContours(const cv::Mat &
     return confirmedContours;
 }
 
-std::vector<std::vector<cv::Point> > RedAnalyzer::filterBackground(const cv::Mat &img, const std::vector<std::vector<cv::Point> > &contours)
+Contours RedAnalyzer::filterBackground(const cv::Mat &img, const Contours &contours)
 {
     std::vector<std::vector<cv::Point>> filtredContours;
     std::copy_if(contours.begin(), contours.end(), std::back_inserter(filtredContours), [&img, this](const auto &contour){
@@ -61,7 +58,7 @@ std::vector<std::vector<cv::Point> > RedAnalyzer::filterBackground(const cv::Mat
     return filtredContours;
 }
 
-std::vector<std::vector<cv::Point> > RedAnalyzer::filterNearbyContours(const std::vector<std::vector<cv::Point> > &normalContours, const std::vector<std::vector<cv::Point> > &colorContours)
+Contours RedAnalyzer::filterNearbyContours(const Contours &normalContours, const Contours &colorContours)
 {
     std::vector<std::vector<cv::Point>> filtredContours;
     std::copy_if(normalContours.begin(), normalContours.end(), std::back_inserter(filtredContours), [this, &colorContours](const auto &contour){
@@ -71,7 +68,7 @@ std::vector<std::vector<cv::Point> > RedAnalyzer::filterNearbyContours(const std
     return filtredContours;
 }
 
-const std::vector<std::vector<cv::Point>> RedAnalyzer::findNearbyContours(const std::vector<cv::Point> &contour, const std::vector<std::vector<cv::Point>> &otherContours)
+Contours RedAnalyzer::findNearbyContours(const Contour &contour, const Contours &otherContours)
 {
     auto rect = cv::boundingRect(contour);
     auto increasedRect = expandRect(rect, increaseStep);
@@ -79,7 +76,7 @@ const std::vector<std::vector<cv::Point>> RedAnalyzer::findNearbyContours(const 
     return nearbyContours;
 }
 
-std::vector<std::vector<cv::Point> > RedAnalyzer::filterArea(const std::vector<std::vector<cv::Point> > &contours)
+Contours RedAnalyzer::filterArea(const Contours &contours)
 {
     std::vector<std::vector<cv::Point>> filtredContours;
     std::copy_if(contours.begin(), contours.end(), std::back_inserter(filtredContours), [&](const auto &contour){
@@ -88,14 +85,14 @@ std::vector<std::vector<cv::Point> > RedAnalyzer::filterArea(const std::vector<s
     return filtredContours;
 }
 
-std::vector<std::vector<cv::Point>> RedAnalyzer::getContoursContainedInRect(const cv::Rect &rect, const std::vector<std::vector<cv::Point>> &contours)
+Contours RedAnalyzer::getContoursContainedInRect(const cv::Rect &rect, const Contours &contours)
 {
     std::vector<std::vector<cv::Point>> nearbyContours;
-    std::copy_if(std::begin(contours), std::end(contours), std::back_inserter(nearbyContours),
-                 [&rect](const auto &contour){
-        Contour contr(contour);
-        return rect.contains(contr.getCenterMass());
-    });
+    auto isContourInRect = [this, &rect](const auto &contour)->bool{
+        auto centerPoint = getCenterPoint(contour);
+        return rect.contains(centerPoint);
+    };
+    std::copy_if(std::begin(contours), std::end(contours), std::back_inserter(nearbyContours), isContourInRect);
     return nearbyContours;
 }
 
@@ -108,7 +105,13 @@ cv::Rect RedAnalyzer::expandRect(const cv::Rect &srcRect, const double expandVal
     return increasedRect;
 }
 
-
+cv::Point RedAnalyzer::getCenterPoint(const Contour &contour)
+{
+    auto moments = cv::moments(contour);
+    auto centerPoint = cv::Point(static_cast<int>(moments.m10/moments.m00),
+                                 static_cast<int>(moments.m01/moments.m00));
+    return centerPoint;
+}
 
 cv::Mat RedAnalyzer::colorBinarize(const cv::Mat &src)
 {
@@ -129,7 +132,7 @@ cv::Mat RedAnalyzer::normalBinarize(const cv::Mat &src)
     return normalBinarizator.binarizeImage(src);
 }
 
-bool RedAnalyzer::checkBackground(const cv::Mat &img, const std::vector<cv::Point> &contour)
+bool RedAnalyzer::checkBackground(const cv::Mat &img, const Contour &contour)
 {
     return backgroundAnalyzer.isDarkBackground(img, contour);
 }
@@ -139,13 +142,12 @@ void RedAnalyzer::setSettings(const RedAnalyzerSettings settings)
     this->settings = settings;
 }
 
-std::vector<std::vector<cv::Point>> RedAnalyzer::findContours(const cv::Mat &img)
+Contours RedAnalyzer::findContours(const cv::Mat &img)
 {
     std::vector<std::vector<cv::Point>> contours;
     cv::findContours(img, contours, cv::RETR_LIST, cv::CHAIN_APPROX_NONE);
     return contours;
 }
-
 
 cv::Mat RedAnalyzer::drawContour(const cv::Mat &img)
 {

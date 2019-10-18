@@ -1,40 +1,34 @@
 #include "branch.h"
 
-Branch::Branch(const Contour &startContour, const TrackDetectorSettings &settings)
-    : contours{startContour}, realChargeSize(settings.size), lifeTime(settings.lifeTime), delta(settings.delta) {}
+Branch::Branch(const cv::Point &startPoint, const TrackDetectorSettings &settings)
+    : points{startPoint}, realChargeSize(settings.size), lifeTime(settings.lifeTime), delta(settings.delta) {}
 
-bool Branch::checkCompatibility(const Contour &newContour) const
+bool Branch::checkCompatibility(const cv::Point &point) const
 {
-    return distanceBetweenPoints(newContour.getCenterMass(), contours.back().getCenterMass()) < delta ? true : false;
+    auto distance = distanceBetweenPoints(point, points.back());
+    return distance < delta ? true : false;
 }
 
-void Branch::addContour(const Contour &newContour)
+void Branch::addPoint(const cv::Point &point)
 {
     pairFound = true;
-    contours.push_back(newContour);
-    lastPoint = newContour.getCenterMass();
+    points.push_back(point);
+    lastPoint = point;
 }
 
-ObjectTrack Branch::getCrownCharge() const
+std::vector<cv::Point> Branch::getPoints() const
 {
-    return ObjectTrack(contours);
+    return points;
 }
 
 int Branch::length() const
 {
-    return static_cast<int>(contours.size());
+    return static_cast<int>(points.size());
 }
 
-double Branch::getAverageArea() const
+bool Branch::isConfirmedBranche() const
 {
-    return  std::accumulate(contours.begin(), contours.end(), 0.0, [](double sum, const Contour &val){
-        return sum += val.getArea();
-    });
-}
-
-bool Branch::isConfirmedCharge() const
-{
-    return (contours.size() >= realChargeSize) && (countToDie <= 0);
+    return (points.size() >= realChargeSize) && (countToDie <= 0);
 }
 
 bool Branch::isPairFound() const
@@ -44,7 +38,7 @@ bool Branch::isPairFound() const
 
 bool Branch::isNoise() const
 {
-    return (contours.size() < realChargeSize) && (countToDie <= 0);
+    return (points.size() < realChargeSize) && (countToDie <= 0);
 }
 
 void Branch::endRound()
@@ -69,5 +63,5 @@ cv::Point Branch::getLastPoint() const
 
 cv::Point Branch::getFistPoint() const
 {
-    return contours.front().getCenterMass();
+    return points.front();
 }

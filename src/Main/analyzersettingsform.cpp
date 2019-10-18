@@ -7,9 +7,9 @@ AnalyzerSettingsForm::AnalyzerSettingsForm(QWidget *parent) :
 {
     ui->setupUi(this);
     RedAnalyzerSettings defaultSetting;
-    ui->areaSizeSpinBox->setValue(defaultSetting.trackDetectorSettings.size);
-    ui->distantSpinBox->setValue(defaultSetting.trackDetectorSettings.delta);
-    ui->lifeTimeSpinBox->setValue(defaultSetting.trackDetectorSettings.lifeTime);
+//    ui->areaSizeSpinBox->setValue(defaultSetting.trackDetectorSettings.size);
+//    ui->distantSpinBox->setValue(defaultSetting.trackDetectorSettings.delta);
+//    ui->lifeTimeSpinBox->setValue(defaultSetting.trackDetectorSettings.lifeTime);
 
 //    ui->tresholdSpinBox->setValue(defaultSetting.binarizatorSettings.thresholdValue);
 }

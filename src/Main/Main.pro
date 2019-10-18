@@ -24,9 +24,6 @@ SOURCES += \
     Analyzer/backgroundanalyzer.cpp \
     Analyzer/branch.cpp \
     Analyzer/branchselector.cpp \
-    Analyzer/contour.cpp \
-    Analyzer/contourseacher.cpp \
-    Analyzer/objecttrack.cpp \
     Analyzer/rectsubtractor.cpp \
     Analyzer/redanalyzer.cpp \
     Analyzer/trackdetector.cpp \
@@ -36,6 +33,7 @@ SOURCES += \
     qcustomplot.cpp
 
 HEADERS += \
+    Analyzer/AdvancePoint.h \
     Analyzer/Binarizator/binarizator.h \
     Analyzer/Binarizator/binarizatorsettingsform.h \
     Analyzer/Binarizator/binarizatorssettings.h \
@@ -45,9 +43,6 @@ HEADERS += \
     Analyzer/backgroundanalyzer.h \
     Analyzer/branch.h \
     Analyzer/branchselector.h \
-    Analyzer/contour.h \
-    Analyzer/contourseacher.h \
-    Analyzer/objecttrack.h \
     Analyzer/rectsubtractor.h \
     Analyzer/redanalyzer.h \
     Analyzer/trackdetector.h \
