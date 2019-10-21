@@ -26,6 +26,7 @@ SOURCES += \
     Analyzer/branchselector.cpp \
     Analyzer/rectsubtractor.cpp \
     Analyzer/redanalyzer.cpp \
+    Analyzer/reddottimedomainfilter.cpp \
     Analyzer/trackdetector.cpp \
     analyzersettingsform.cpp \
     main.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     Analyzer/branchselector.h \
     Analyzer/rectsubtractor.h \
     Analyzer/redanalyzer.h \
+    Analyzer/reddottimedomainfilter.h \
     Analyzer/trackdetector.h \
     Analyzer/trackdetectorsettings.h \
     analyzersettingsform.h \

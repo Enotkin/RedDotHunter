@@ -4,6 +4,7 @@
 #include <list>
 #include <numeric>
 
+#include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/video.hpp"
 #include "trackdetectorsettings.h"
