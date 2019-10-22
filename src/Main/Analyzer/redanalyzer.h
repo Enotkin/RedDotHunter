@@ -11,6 +11,7 @@
 #include "Binarizator/binarizator.h"
 #include "Binarizator/colorbinarizator.h"
 #include "Binarizator/normalbinarizator.h"
+#include "TimeDomainFilter/staticpointsfilter.h"
 #include "asmOpenCV.h"
 #include "backgroundanalyzer.h"
 
@@ -24,6 +25,7 @@ using Contour = std::vector<cv::Point>;
 using Contours = std::vector<Contour>;
 
 using Points = std::vector<cv::Point>;
+using PointsPacks = std::vector<std::vector<cv::Point>>;
 
 class RedAnalyzer : public QObject
 {
@@ -39,6 +41,7 @@ public:
 private:
     RedAnalyzerSettings settings;
     BackgroundAnalyzer backgroundAnalyzer;
+    az::StaticPointsFilter staticPointsFilter;
     const int increaseStep = 3;
     const int maxAverageBrightness = 50;
     const int maxContourArea = 150;
@@ -56,6 +59,12 @@ private:
     Contours filterNearbyContours(const Contours &normalContours, const Contours &colorContours);
     Contours filterArea(const Contours &contours);
     Contours findNearbyContours(const Contour &contour, const Contours &otherContours);
+    PointsPacks timeFilter(const PointsPacks &points);
+
+    std::vector<QPoint> cvPoints2QPoints(const std::vector<cv::Point> &cvPoints);
+    std::vector<cv::Point> qPoints2cvPoints(const std::vector<QPoint> &qPoints);
+    std::vector<std::vector<QPoint>> cvPointsPacks2QPointsPack(const std::vector<std::vector<cv::Point>> &cvPointsPack);
+    std::vector<std::vector<cv::Point>> qPointsPack2cvPointsPack(const std::vector<std::vector<QPoint>> &qPointsPack);
 };
 
 #endif // REDANALYZER_H

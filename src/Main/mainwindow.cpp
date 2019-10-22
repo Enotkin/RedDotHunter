@@ -22,8 +22,6 @@ void MainWindow::on_SelectFolderPushButton_clicked()
         return;
     analyzer.setSettings(ui->generalSettings->getSettings());
     auto result = analyzer.getRedDotsCoordinate(imagesInfo);
-    TrackDetector detector;
-    auto tracks = detector.separatePoints(result);
 
     auto [xData, yData, numbers] = separateGraphData(result);
     ui->xPlot->xAxis->setRange(0, result.size());
@@ -68,7 +66,6 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
 
 void MainWindow::on_prevImagePushButton_clicked()
 {
-
     displayImage(--currentImgInfo);
     ui->horizontalSlider->setValue(ui->horizontalSlider->value()-1);
 }

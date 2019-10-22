@@ -52,6 +52,11 @@ SOURCES       = Analyzer\Binarizator\binarizator.cpp \
 		Analyzer\Binarizator\colorbinarizator.cpp \
 		Analyzer\Binarizator\colorselector.cpp \
 		Analyzer\Binarizator\normalbinarizator.cpp \
+		Analyzer\TimeDomainFilter\staticpointsfilter.cpp \
+		Analyzer\TimeDomainFilter\staticpointsfilter\markedpoint.cpp \
+		Analyzer\TimeDomainFilter\staticpointsfilter\pointtrace.cpp \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfilterprivate.cpp \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.cpp \
 		Analyzer\backgroundanalyzer.cpp \
 		Analyzer\branch.cpp \
 		Analyzer\branchselector.cpp \
@@ -73,6 +78,11 @@ OBJECTS       = ..\..\build\debug\Main\obj\binarizator.obj \
 		..\..\build\debug\Main\obj\colorbinarizator.obj \
 		..\..\build\debug\Main\obj\colorselector.obj \
 		..\..\build\debug\Main\obj\normalbinarizator.obj \
+		..\..\build\debug\Main\obj\staticpointsfilter.obj \
+		..\..\build\debug\Main\obj\markedpoint.obj \
+		..\..\build\debug\Main\obj\pointtrace.obj \
+		..\..\build\debug\Main\obj\staticpointsfilterprivate.obj \
+		..\..\build\debug\Main\obj\staticpointsfiltersettings.obj \
 		..\..\build\debug\Main\obj\backgroundanalyzer.obj \
 		..\..\build\debug\Main\obj\branch.obj \
 		..\..\build\debug\Main\obj\branchselector.obj \
@@ -97,6 +107,12 @@ DIST          =  Analyzer\Binarizator\binarizator.h \
 		Analyzer\Binarizator\colorbinarizator.h \
 		Analyzer\Binarizator\colorselector.h \
 		Analyzer\Binarizator\normalbinarizator.h \
+		Analyzer\TimeDomainFilter\pointsfilter_common.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\markedpoint.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\pointtrace.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfilterprivate.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.h \
 		Analyzer\backgroundanalyzer.h \
 		Analyzer\branch.h \
 		Analyzer\branchselector.h \
@@ -111,6 +127,11 @@ DIST          =  Analyzer\Binarizator\binarizator.h \
 		Analyzer\Binarizator\colorbinarizator.cpp \
 		Analyzer\Binarizator\colorselector.cpp \
 		Analyzer\Binarizator\normalbinarizator.cpp \
+		Analyzer\TimeDomainFilter\staticpointsfilter.cpp \
+		Analyzer\TimeDomainFilter\staticpointsfilter\markedpoint.cpp \
+		Analyzer\TimeDomainFilter\staticpointsfilter\pointtrace.cpp \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfilterprivate.cpp \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.cpp \
 		Analyzer\backgroundanalyzer.cpp \
 		Analyzer\branch.cpp \
 		Analyzer\branchselector.cpp \
@@ -230,6 +251,46 @@ DESTDIR_TARGET = ..\..\bin\debug\Main.exe
 	$<
 <<
 
+{Analyzer\TimeDomainFilter\staticpointsfilter}.cpp{..\..\build\debug\Main\obj\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fo..\..\build\debug\Main\obj\ @<<
+	$<
+<<
+
+{Analyzer\TimeDomainFilter\staticpointsfilter}.cc{..\..\build\debug\Main\obj\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fo..\..\build\debug\Main\obj\ @<<
+	$<
+<<
+
+{Analyzer\TimeDomainFilter\staticpointsfilter}.cxx{..\..\build\debug\Main\obj\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fo..\..\build\debug\Main\obj\ @<<
+	$<
+<<
+
+{Analyzer\TimeDomainFilter\staticpointsfilter}.c{..\..\build\debug\Main\obj\}.obj::
+	$(CC) -c $(CFLAGS) $(INCPATH) -Fo..\..\build\debug\Main\obj\ @<<
+	$<
+<<
+
+{Analyzer\TimeDomainFilter}.cpp{..\..\build\debug\Main\obj\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fo..\..\build\debug\Main\obj\ @<<
+	$<
+<<
+
+{Analyzer\TimeDomainFilter}.cc{..\..\build\debug\Main\obj\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fo..\..\build\debug\Main\obj\ @<<
+	$<
+<<
+
+{Analyzer\TimeDomainFilter}.cxx{..\..\build\debug\Main\obj\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fo..\..\build\debug\Main\obj\ @<<
+	$<
+<<
+
+{Analyzer\TimeDomainFilter}.c{..\..\build\debug\Main\obj\}.obj::
+	$(CC) -c $(CFLAGS) $(INCPATH) -Fo..\..\build\debug\Main\obj\ @<<
+	$<
+<<
+
 {..\..\build\debug\Main\moc}.cpp{..\..\build\debug\Main\obj\}.obj::
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fo..\..\build\debug\Main\obj\ @<<
 	$<
@@ -257,8 +318,8 @@ all: Makefile.Debug  ..\..\bin\debug\Main.exe
 
 ..\..\bin\debug\Main.exe: ..\..\build\debug\Main\ui\ui_binarizatorsettingsform.h ..\..\build\debug\Main\ui\ui_colorselector.h ..\..\build\debug\Main\ui\ui_analyzersettingsform.h ..\..\build\debug\Main\ui\ui_mainwindow.h $(OBJECTS) 
 	$(LINKER) $(LFLAGS) /MANIFEST:embed /OUT:$(DESTDIR_TARGET) @<<
-..\..\build\debug\Main\obj\binarizator.obj ..\..\build\debug\Main\obj\binarizatorsettingsform.obj ..\..\build\debug\Main\obj\colorbinarizator.obj ..\..\build\debug\Main\obj\colorselector.obj ..\..\build\debug\Main\obj\normalbinarizator.obj ..\..\build\debug\Main\obj\backgroundanalyzer.obj ..\..\build\debug\Main\obj\branch.obj ..\..\build\debug\Main\obj\branchselector.obj ..\..\build\debug\Main\obj\rectsubtractor.obj ..\..\build\debug\Main\obj\redanalyzer.obj ..\..\build\debug\Main\obj\trackdetector.obj ..\..\build\debug\Main\obj\analyzersettingsform.obj ..\..\build\debug\Main\obj\main.obj ..\..\build\debug\Main\obj\mainwindow.obj ..\..\build\debug\Main\obj\qcustomplot.obj ..\..\build\debug\Main\obj\qrc_resources.obj ..\..\build\debug\Main\obj\moc_binarizatorsettingsform.obj ..\..\build\debug\Main\obj\moc_colorselector.obj ..\..\build\debug\Main\obj\moc_redanalyzer.obj ..\..\build\debug\Main\obj\moc_analyzersettingsform.obj ..\..\build\debug\Main\obj\moc_mainwindow.obj
-..\..\build\debug\Main\obj\moc_qcustomplot.obj
+..\..\build\debug\Main\obj\binarizator.obj ..\..\build\debug\Main\obj\binarizatorsettingsform.obj ..\..\build\debug\Main\obj\colorbinarizator.obj ..\..\build\debug\Main\obj\colorselector.obj ..\..\build\debug\Main\obj\normalbinarizator.obj ..\..\build\debug\Main\obj\staticpointsfilter.obj ..\..\build\debug\Main\obj\markedpoint.obj ..\..\build\debug\Main\obj\pointtrace.obj ..\..\build\debug\Main\obj\staticpointsfilterprivate.obj ..\..\build\debug\Main\obj\staticpointsfiltersettings.obj ..\..\build\debug\Main\obj\backgroundanalyzer.obj ..\..\build\debug\Main\obj\branch.obj ..\..\build\debug\Main\obj\branchselector.obj ..\..\build\debug\Main\obj\rectsubtractor.obj ..\..\build\debug\Main\obj\redanalyzer.obj ..\..\build\debug\Main\obj\trackdetector.obj ..\..\build\debug\Main\obj\analyzersettingsform.obj ..\..\build\debug\Main\obj\main.obj ..\..\build\debug\Main\obj\mainwindow.obj ..\..\build\debug\Main\obj\qcustomplot.obj ..\..\build\debug\Main\obj\qrc_resources.obj
+..\..\build\debug\Main\obj\moc_binarizatorsettingsform.obj ..\..\build\debug\Main\obj\moc_colorselector.obj ..\..\build\debug\Main\obj\moc_redanalyzer.obj ..\..\build\debug\Main\obj\moc_analyzersettingsform.obj ..\..\build\debug\Main\obj\moc_mainwindow.obj ..\..\build\debug\Main\obj\moc_qcustomplot.obj
 $(LIBS)
 <<
 
@@ -268,10 +329,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) Main.zip $(SOURCES) $(DIST) Main.pro C:\Qt\5.12.1\msvc2017\mkspecs\features\spec_pre.prf C:\Qt\5.12.1\msvc2017\mkspecs\common\angle.conf C:\Qt\5.12.1\msvc2017\mkspecs\common\windows-vulkan.conf C:\Qt\5.12.1\msvc2017\mkspecs\common\msvc-desktop.conf C:\Qt\5.12.1\msvc2017\mkspecs\qconfig.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3danimation.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3danimation_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dcore.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dcore_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dextras.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dextras_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dinput.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dinput_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dlogic.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dlogic_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquick.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquick_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickanimation.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickanimation_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickextras.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickextras_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickinput.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickinput_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickrender.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickrender_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickscene2d.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickscene2d_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3drender.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3drender_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_accessibility_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_axbase.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_axserver.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_core.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_core_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_datavisualization.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_datavisualization_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_dbus.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_designer.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_edid_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_egl_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_fontdatabase_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_gamepad.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_gamepad_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_gui.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_help.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_help_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_location.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_location_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_network.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_network_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_nfc.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_opengl.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_platformcompositor_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_positioning.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_positioningquick.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_positioningquick_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_qml.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quick.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quickshapes_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_remoteobjects.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_remoteobjects_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_repparser.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_repparser_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_scxml.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_scxml_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_sensors.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_serialbus.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_serialbus_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_serialport.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_sql.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_svg.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_testlib.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_texttospeech.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_texttospeech_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_theme_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_uitools.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_vulkan_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_websockets.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_webview.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_webview_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_widgets.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_windowsuiautomation_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_winextras.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_xml.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_zlib_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\features\qt_functions.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\qt_config.prf C:\Qt\5.12.1\msvc2017\mkspecs\win32-msvc\qmake.conf C:\Qt\5.12.1\msvc2017\mkspecs\features\spec_post.prf ..\..\.qmake.stash C:\Qt\5.12.1\msvc2017\mkspecs\features\exclusive_builds.prf C:\Qt\5.12.1\msvc2017\mkspecs\common\msvc-version.conf C:\Qt\5.12.1\msvc2017\mkspecs\features\toolchain.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\default_pre.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\win32\default_pre.prf ..\..\common.pri C:\Qt\5.12.1\msvc2017\mkspecs\features\resolve_config.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\exclusive_builds_post.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\default_post.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\build_pass.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\resources.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\qtquickcompiler.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\precompile_header.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\warn_on.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\qt.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\moc.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\win32\opengl.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\uic.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\qmake_use.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\file_copies.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\win32\windows.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\testcase_targets.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\exceptions.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\yacc.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\lex.prf Main.pro resources.qrc C:\Qt\5.12.1\msvc2017\lib\Qt5PrintSupportd.prl C:\Qt\5.12.1\msvc2017\lib\Qt5Widgetsd.prl C:\Qt\5.12.1\msvc2017\lib\Qt5Guid.prl C:\Qt\5.12.1\msvc2017\lib\Qt5Cored.prl C:\Qt\5.12.1\msvc2017\lib\qtmaind.prl  resources.qrc    C:\Qt\5.12.1\msvc2017\mkspecs\features\data\dummy.cpp Analyzer\Binarizator\binarizator.h Analyzer\Binarizator\binarizatorsettingsform.h Analyzer\Binarizator\binarizatorssettings.h Analyzer\Binarizator\colorbinarizator.h Analyzer\Binarizator\colorselector.h Analyzer\Binarizator\normalbinarizator.h Analyzer\backgroundanalyzer.h Analyzer\branch.h Analyzer\branchselector.h Analyzer\rectsubtractor.h Analyzer\redanalyzer.h Analyzer\trackdetector.h Analyzer\trackdetectorsettings.h analyzersettingsform.h mainwindow.h qcustomplot.h  Analyzer\Binarizator\binarizator.cpp Analyzer\Binarizator\binarizatorsettingsform.cpp Analyzer\Binarizator\colorbinarizator.cpp Analyzer\Binarizator\colorselector.cpp Analyzer\Binarizator\normalbinarizator.cpp Analyzer\backgroundanalyzer.cpp Analyzer\branch.cpp Analyzer\branchselector.cpp Analyzer\rectsubtractor.cpp Analyzer\redanalyzer.cpp Analyzer\trackdetector.cpp analyzersettingsform.cpp main.cpp mainwindow.cpp qcustomplot.cpp Analyzer\Binarizator\binarizatorsettingsform.ui Analyzer\Binarizator\colorselector.ui analyzersettingsform.ui mainwindow.ui    
+	$(ZIP) Main.zip $(SOURCES) $(DIST) Main.pro C:\Qt\5.12.1\msvc2017\mkspecs\features\spec_pre.prf C:\Qt\5.12.1\msvc2017\mkspecs\common\angle.conf C:\Qt\5.12.1\msvc2017\mkspecs\common\windows-vulkan.conf C:\Qt\5.12.1\msvc2017\mkspecs\common\msvc-desktop.conf C:\Qt\5.12.1\msvc2017\mkspecs\qconfig.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3danimation.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3danimation_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dcore.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dcore_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dextras.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dextras_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dinput.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dinput_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dlogic.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dlogic_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquick.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquick_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickanimation.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickanimation_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickextras.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickextras_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickinput.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickinput_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickrender.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickrender_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickscene2d.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3dquickscene2d_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3drender.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_3drender_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_accessibility_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_axbase.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_axserver.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_core.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_core_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_datavisualization.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_datavisualization_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_dbus.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_designer.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_edid_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_egl_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_fontdatabase_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_gamepad.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_gamepad_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_gui.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_help.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_help_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_location.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_location_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_network.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_network_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_nfc.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_opengl.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_platformcompositor_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_positioning.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_positioningquick.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_positioningquick_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_qml.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quick.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quickshapes_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_remoteobjects.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_remoteobjects_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_repparser.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_repparser_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_scxml.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_scxml_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_sensors.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_serialbus.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_serialbus_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_serialport.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_sql.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_svg.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_testlib.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_texttospeech.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_texttospeech_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_theme_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_uitools.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_vulkan_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_websockets.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_webview.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_webview_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_widgets.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_windowsuiautomation_support_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_winextras.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_xml.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\modules\qt_lib_zlib_private.pri C:\Qt\5.12.1\msvc2017\mkspecs\features\qt_functions.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\qt_config.prf C:\Qt\5.12.1\msvc2017\mkspecs\win32-msvc\qmake.conf C:\Qt\5.12.1\msvc2017\mkspecs\features\spec_post.prf ..\..\.qmake.stash C:\Qt\5.12.1\msvc2017\mkspecs\features\exclusive_builds.prf C:\Qt\5.12.1\msvc2017\mkspecs\common\msvc-version.conf C:\Qt\5.12.1\msvc2017\mkspecs\features\toolchain.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\default_pre.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\win32\default_pre.prf ..\..\common.pri C:\Qt\5.12.1\msvc2017\mkspecs\features\resolve_config.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\exclusive_builds_post.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\default_post.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\build_pass.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\resources.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\qtquickcompiler.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\precompile_header.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\warn_on.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\qt.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\moc.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\win32\opengl.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\uic.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\qmake_use.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\file_copies.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\win32\windows.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\testcase_targets.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\exceptions.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\yacc.prf C:\Qt\5.12.1\msvc2017\mkspecs\features\lex.prf Main.pro resources.qrc C:\Qt\5.12.1\msvc2017\lib\Qt5PrintSupportd.prl C:\Qt\5.12.1\msvc2017\lib\Qt5Widgetsd.prl C:\Qt\5.12.1\msvc2017\lib\Qt5Guid.prl C:\Qt\5.12.1\msvc2017\lib\Qt5Cored.prl C:\Qt\5.12.1\msvc2017\lib\qtmaind.prl  resources.qrc    C:\Qt\5.12.1\msvc2017\mkspecs\features\data\dummy.cpp Analyzer\Binarizator\binarizator.h Analyzer\Binarizator\binarizatorsettingsform.h Analyzer\Binarizator\binarizatorssettings.h Analyzer\Binarizator\colorbinarizator.h Analyzer\Binarizator\colorselector.h Analyzer\Binarizator\normalbinarizator.h Analyzer\TimeDomainFilter\pointsfilter_common.h Analyzer\TimeDomainFilter\staticpointsfilter.h Analyzer\TimeDomainFilter\staticpointsfilter\markedpoint.h Analyzer\TimeDomainFilter\staticpointsfilter\pointtrace.h Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfilterprivate.h Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.h Analyzer\backgroundanalyzer.h Analyzer\branch.h Analyzer\branchselector.h Analyzer\rectsubtractor.h Analyzer\redanalyzer.h Analyzer\trackdetector.h Analyzer\trackdetectorsettings.h analyzersettingsform.h mainwindow.h qcustomplot.h  Analyzer\Binarizator\binarizator.cpp Analyzer\Binarizator\binarizatorsettingsform.cpp Analyzer\Binarizator\colorbinarizator.cpp Analyzer\Binarizator\colorselector.cpp Analyzer\Binarizator\normalbinarizator.cpp Analyzer\TimeDomainFilter\staticpointsfilter.cpp Analyzer\TimeDomainFilter\staticpointsfilter\markedpoint.cpp Analyzer\TimeDomainFilter\staticpointsfilter\pointtrace.cpp Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfilterprivate.cpp Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.cpp Analyzer\backgroundanalyzer.cpp Analyzer\branch.cpp Analyzer\branchselector.cpp Analyzer\rectsubtractor.cpp Analyzer\redanalyzer.cpp Analyzer\trackdetector.cpp analyzersettingsform.cpp main.cpp mainwindow.cpp qcustomplot.cpp Analyzer\Binarizator\binarizatorsettingsform.ui Analyzer\Binarizator\colorselector.ui analyzersettingsform.ui mainwindow.ui    
 
 clean: compiler_clean 
-	-$(DEL_FILE) ..\..\build\debug\Main\obj\binarizator.obj ..\..\build\debug\Main\obj\binarizatorsettingsform.obj ..\..\build\debug\Main\obj\colorbinarizator.obj ..\..\build\debug\Main\obj\colorselector.obj ..\..\build\debug\Main\obj\normalbinarizator.obj ..\..\build\debug\Main\obj\backgroundanalyzer.obj ..\..\build\debug\Main\obj\branch.obj ..\..\build\debug\Main\obj\branchselector.obj ..\..\build\debug\Main\obj\rectsubtractor.obj ..\..\build\debug\Main\obj\redanalyzer.obj ..\..\build\debug\Main\obj\trackdetector.obj ..\..\build\debug\Main\obj\analyzersettingsform.obj ..\..\build\debug\Main\obj\main.obj ..\..\build\debug\Main\obj\mainwindow.obj ..\..\build\debug\Main\obj\qcustomplot.obj ..\..\build\debug\Main\obj\qrc_resources.obj ..\..\build\debug\Main\obj\moc_binarizatorsettingsform.obj ..\..\build\debug\Main\obj\moc_colorselector.obj ..\..\build\debug\Main\obj\moc_redanalyzer.obj ..\..\build\debug\Main\obj\moc_analyzersettingsform.obj ..\..\build\debug\Main\obj\moc_mainwindow.obj ..\..\build\debug\Main\obj\moc_qcustomplot.obj
+	-$(DEL_FILE) ..\..\build\debug\Main\obj\binarizator.obj ..\..\build\debug\Main\obj\binarizatorsettingsform.obj ..\..\build\debug\Main\obj\colorbinarizator.obj ..\..\build\debug\Main\obj\colorselector.obj ..\..\build\debug\Main\obj\normalbinarizator.obj ..\..\build\debug\Main\obj\staticpointsfilter.obj ..\..\build\debug\Main\obj\markedpoint.obj ..\..\build\debug\Main\obj\pointtrace.obj ..\..\build\debug\Main\obj\staticpointsfilterprivate.obj ..\..\build\debug\Main\obj\staticpointsfiltersettings.obj ..\..\build\debug\Main\obj\backgroundanalyzer.obj ..\..\build\debug\Main\obj\branch.obj ..\..\build\debug\Main\obj\branchselector.obj ..\..\build\debug\Main\obj\rectsubtractor.obj ..\..\build\debug\Main\obj\redanalyzer.obj ..\..\build\debug\Main\obj\trackdetector.obj ..\..\build\debug\Main\obj\analyzersettingsform.obj ..\..\build\debug\Main\obj\main.obj ..\..\build\debug\Main\obj\mainwindow.obj ..\..\build\debug\Main\obj\qcustomplot.obj ..\..\build\debug\Main\obj\qrc_resources.obj ..\..\build\debug\Main\obj\moc_binarizatorsettingsform.obj ..\..\build\debug\Main\obj\moc_colorselector.obj ..\..\build\debug\Main\obj\moc_redanalyzer.obj ..\..\build\debug\Main\obj\moc_analyzersettingsform.obj ..\..\build\debug\Main\obj\moc_mainwindow.obj ..\..\build\debug\Main\obj\moc_qcustomplot.obj
 	-$(DEL_FILE) ..\..\bin\debug\Main.exp ..\..\build\debug\Main\obj\Main.vc.pdb ..\..\bin\debug\Main.ilk ..\..\bin\debug\Main.idb
 
 distclean: clean 
@@ -667,6 +728,10 @@ compiler_moc_header_clean:
 		Analyzer\Binarizator\binarizatorssettings.h \
 		Analyzer\Binarizator\colorbinarizator.h \
 		Analyzer\Binarizator\normalbinarizator.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.h \
+		Analyzer\TimeDomainFilter\pointsfilter_common.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\QPoint \
 		..\..\import\asmOpenCV.h \
 		C:\Qt\5.12.1\msvc2017\include\QtGui\QPixmap \
 		C:\Qt\5.12.1\msvc2017\include\QtGui\qpixmap.h \
@@ -835,6 +900,10 @@ compiler_moc_header_clean:
 		Analyzer\Binarizator\binarizatorssettings.h \
 		Analyzer\Binarizator\colorbinarizator.h \
 		Analyzer\Binarizator\normalbinarizator.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.h \
+		Analyzer\TimeDomainFilter\pointsfilter_common.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\QPoint \
 		..\..\import\asmOpenCV.h \
 		C:\Qt\5.12.1\msvc2017\include\QtGui\QPixmap \
 		C:\Qt\5.12.1\msvc2017\include\QtCore\QtGlobal \
@@ -1406,14 +1475,18 @@ compiler_moc_header_clean:
 		Analyzer\redanalyzer.h \
 		C:\Qt\5.12.1\msvc2017\include\QtCore\QDir \
 		C:\Qt\5.12.1\msvc2017\include\QtCore\QFileInfo \
+		Analyzer\TimeDomainFilter\staticpointsfilter.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.h \
+		Analyzer\TimeDomainFilter\pointsfilter_common.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\QPoint \
 		Analyzer\backgroundanalyzer.h \
 		Analyzer\rectsubtractor.h \
 		Analyzer\Binarizator\binarizatorsettingsform.h \
 		Analyzer\Binarizator\colorselector.h \
 		Analyzer\trackdetector.h \
+		Analyzer\branchselector.h \
 		Analyzer\branch.h \
 		Analyzer\trackdetectorsettings.h \
-		Analyzer\branchselector.h \
 		..\..\build\debug\Main\moc\moc_predefs.h \
 		C:\Qt\5.12.1\msvc2017\bin\moc.exe
 	C:\Qt\5.12.1\msvc2017\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include C:/Users/kolegov/Documents/RedDotHunter/build/debug/Main/moc/moc_predefs.h -IC:/Qt/5.12.1/msvc2017/mkspecs/win32-msvc -IC:/Users/kolegov/Documents/RedDotHunter/src/Main -IC:/Users/kolegov/Documents/RedDotHunter/src/Main/Analyzer/Binarizator -IC:/Users/kolegov/Documents/RedDotHunter/import -IC:/Qt/5.12.1/msvc2017/include -IC:/Qt/5.12.1/msvc2017/include/QtPrintSupport -IC:/Qt/5.12.1/msvc2017/include/QtWidgets -IC:/Qt/5.12.1/msvc2017/include/QtGui -IC:/Qt/5.12.1/msvc2017/include/QtANGLE -IC:/Qt/5.12.1/msvc2017/include/QtCore -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include" -I"C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt" mainwindow.h -o ..\..\build\debug\Main\moc\moc_mainwindow.cpp
@@ -2207,6 +2280,10 @@ compiler_uic_clean:
 		Analyzer\Binarizator\binarizatorssettings.h \
 		Analyzer\Binarizator\colorbinarizator.h \
 		Analyzer\Binarizator\normalbinarizator.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.h \
+		Analyzer\TimeDomainFilter\pointsfilter_common.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\QPoint \
 		..\..\import\asmOpenCV.h \
 		C:\Qt\5.12.1\msvc2017\include\QtGui\QPixmap \
 		C:\Qt\5.12.1\msvc2017\include\QtCore\QtGlobal \
@@ -3338,6 +3415,124 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 		..\..\import\opencv2\video\background_segm.hpp \
 		Analyzer\Binarizator\binarizatorssettings.h
 
+..\..\build\debug\Main\obj\staticpointsfilter.obj: Analyzer\TimeDomainFilter\staticpointsfilter.cpp Analyzer\TimeDomainFilter\staticpointsfilter.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.h \
+		Analyzer\TimeDomainFilter\pointsfilter_common.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\QPoint \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qpoint.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qnamespace.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qglobal.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qconfig-bootstrapped.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qconfig.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qtcore-config.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qsystemdetection.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qprocessordetection.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qcompilerdetection.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qtypeinfo.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qsysinfo.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qlogging.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qflags.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qbasicatomic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic_bootstrap.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qgenericatomic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic_cxx11.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic_msvc.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qglobalstatic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qmutex.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qnumeric.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qversiontagging.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfilterprivate.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\pointtrace.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\markedpoint.h
+
+..\..\build\debug\Main\obj\markedpoint.obj: Analyzer\TimeDomainFilter\staticpointsfilter\markedpoint.cpp Analyzer\TimeDomainFilter\staticpointsfilter\markedpoint.h \
+		Analyzer\TimeDomainFilter\pointsfilter_common.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\QPoint \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qpoint.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qnamespace.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qglobal.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qconfig-bootstrapped.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qconfig.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qtcore-config.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qsystemdetection.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qprocessordetection.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qcompilerdetection.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qtypeinfo.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qsysinfo.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qlogging.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qflags.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qbasicatomic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic_bootstrap.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qgenericatomic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic_cxx11.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic_msvc.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qglobalstatic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qmutex.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qnumeric.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qversiontagging.h
+
+..\..\build\debug\Main\obj\pointtrace.obj: Analyzer\TimeDomainFilter\staticpointsfilter\pointtrace.cpp Analyzer\TimeDomainFilter\staticpointsfilter\pointtrace.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\markedpoint.h \
+		Analyzer\TimeDomainFilter\pointsfilter_common.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\QPoint \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qpoint.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qnamespace.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qglobal.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qconfig-bootstrapped.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qconfig.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qtcore-config.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qsystemdetection.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qprocessordetection.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qcompilerdetection.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qtypeinfo.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qsysinfo.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qlogging.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qflags.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qbasicatomic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic_bootstrap.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qgenericatomic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic_cxx11.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic_msvc.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qglobalstatic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qmutex.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qnumeric.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qversiontagging.h
+
+..\..\build\debug\Main\obj\staticpointsfilterprivate.obj: Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfilterprivate.cpp Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfilterprivate.h \
+		Analyzer\TimeDomainFilter\pointsfilter_common.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\QPoint \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qpoint.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qnamespace.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qglobal.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qconfig-bootstrapped.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qconfig.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qtcore-config.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qsystemdetection.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qprocessordetection.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qcompilerdetection.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qtypeinfo.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qsysinfo.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qlogging.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qflags.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qbasicatomic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic_bootstrap.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qgenericatomic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic_cxx11.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qatomic_msvc.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qglobalstatic.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qmutex.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qnumeric.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\qversiontagging.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\pointtrace.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\markedpoint.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.h
+
+..\..\build\debug\Main\obj\staticpointsfiltersettings.obj: Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.cpp Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.h
+
 ..\..\build\debug\Main\obj\backgroundanalyzer.obj: Analyzer\backgroundanalyzer.cpp Analyzer\backgroundanalyzer.h \
 		..\..\import\opencv2\imgcodecs.hpp \
 		..\..\import\opencv2\core.hpp \
@@ -3403,7 +3598,7 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 		C:\Qt\5.12.1\msvc2017\include\QtCore\qpoint.h
 
 ..\..\build\debug\Main\obj\branch.obj: Analyzer\branch.cpp Analyzer\branch.h \
-		..\..\import\opencv2\highgui.hpp \
+		..\..\import\opencv2\imgcodecs.hpp \
 		..\..\import\opencv2\core.hpp \
 		..\..\import\opencv2\core\cvdef.h \
 		..\..\import\opencv2\core\hal\interface.h \
@@ -3431,7 +3626,7 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 		..\..\import\opencv2\core\utility.hpp \
 		..\..\import\opencv2\core\optim.hpp \
 		..\..\import\opencv2\core\ovx.hpp \
-		..\..\import\opencv2\imgcodecs.hpp \
+		..\..\import\opencv2\highgui.hpp \
 		..\..\import\opencv2\videoio.hpp \
 		..\..\import\opencv2\video.hpp \
 		..\..\import\opencv2\video\tracking.hpp \
@@ -3441,7 +3636,7 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ..\..\build\debug\Main\obj\branchselector.obj: Analyzer\branchselector.cpp Analyzer\branchselector.h \
 		Analyzer\branch.h \
-		..\..\import\opencv2\highgui.hpp \
+		..\..\import\opencv2\imgcodecs.hpp \
 		..\..\import\opencv2\core.hpp \
 		..\..\import\opencv2\core\cvdef.h \
 		..\..\import\opencv2\core\hal\interface.h \
@@ -3469,7 +3664,7 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 		..\..\import\opencv2\core\utility.hpp \
 		..\..\import\opencv2\core\optim.hpp \
 		..\..\import\opencv2\core\ovx.hpp \
-		..\..\import\opencv2\imgcodecs.hpp \
+		..\..\import\opencv2\highgui.hpp \
 		..\..\import\opencv2\videoio.hpp \
 		..\..\import\opencv2\video.hpp \
 		..\..\import\opencv2\video\tracking.hpp \
@@ -3733,6 +3928,10 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 		Analyzer\Binarizator\binarizatorssettings.h \
 		Analyzer\Binarizator\colorbinarizator.h \
 		Analyzer\Binarizator\normalbinarizator.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.h \
+		Analyzer\TimeDomainFilter\pointsfilter_common.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\QPoint \
 		..\..\import\asmOpenCV.h \
 		C:\Qt\5.12.1\msvc2017\include\QtGui\QPixmap \
 		C:\Qt\5.12.1\msvc2017\include\QtGui\qpixmap.h \
@@ -3746,8 +3945,9 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 		C:\Qt\5.12.1\msvc2017\include\QtCore\QRect
 
 ..\..\build\debug\Main\obj\trackdetector.obj: Analyzer\trackdetector.cpp Analyzer\trackdetector.h \
+		Analyzer\branchselector.h \
 		Analyzer\branch.h \
-		..\..\import\opencv2\highgui.hpp \
+		..\..\import\opencv2\imgcodecs.hpp \
 		..\..\import\opencv2\core.hpp \
 		..\..\import\opencv2\core\cvdef.h \
 		..\..\import\opencv2\core\hal\interface.h \
@@ -3775,14 +3975,13 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 		..\..\import\opencv2\core\utility.hpp \
 		..\..\import\opencv2\core\optim.hpp \
 		..\..\import\opencv2\core\ovx.hpp \
-		..\..\import\opencv2\imgcodecs.hpp \
+		..\..\import\opencv2\highgui.hpp \
 		..\..\import\opencv2\videoio.hpp \
 		..\..\import\opencv2\video.hpp \
 		..\..\import\opencv2\video\tracking.hpp \
 		..\..\import\opencv2\imgproc.hpp \
 		..\..\import\opencv2\video\background_segm.hpp \
 		Analyzer\trackdetectorsettings.h \
-		Analyzer\branchselector.h \
 		C:\Qt\5.12.1\msvc2017\include\QtCore\QDebug \
 		C:\Qt\5.12.1\msvc2017\include\QtCore\qdebug.h \
 		C:\Qt\5.12.1\msvc2017\include\QtCore\qalgorithms.h \
@@ -4001,6 +4200,10 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 		Analyzer\Binarizator\binarizatorssettings.h \
 		Analyzer\Binarizator\colorbinarizator.h \
 		Analyzer\Binarizator\normalbinarizator.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.h \
+		Analyzer\TimeDomainFilter\pointsfilter_common.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\QPoint \
 		..\..\import\asmOpenCV.h \
 		C:\Qt\5.12.1\msvc2017\include\QtGui\QPixmap \
 		C:\Qt\5.12.1\msvc2017\include\QtCore\QtGlobal \
@@ -4570,14 +4773,18 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 		Analyzer\redanalyzer.h \
 		C:\Qt\5.12.1\msvc2017\include\QtCore\QDir \
 		C:\Qt\5.12.1\msvc2017\include\QtCore\QFileInfo \
+		Analyzer\TimeDomainFilter\staticpointsfilter.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.h \
+		Analyzer\TimeDomainFilter\pointsfilter_common.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\QPoint \
 		Analyzer\backgroundanalyzer.h \
 		Analyzer\rectsubtractor.h \
 		Analyzer\Binarizator\binarizatorsettingsform.h \
 		Analyzer\Binarizator\colorselector.h \
 		Analyzer\trackdetector.h \
+		Analyzer\branchselector.h \
 		Analyzer\branch.h \
 		Analyzer\trackdetectorsettings.h \
-		Analyzer\branchselector.h \
 		C:\Qt\5.12.1\msvc2017\include\QtWidgets\QApplication
 
 ..\..\build\debug\Main\obj\mainwindow.obj: mainwindow.cpp mainwindow.h \
@@ -5137,14 +5344,18 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 		Analyzer\redanalyzer.h \
 		C:\Qt\5.12.1\msvc2017\include\QtCore\QDir \
 		C:\Qt\5.12.1\msvc2017\include\QtCore\QFileInfo \
+		Analyzer\TimeDomainFilter\staticpointsfilter.h \
+		Analyzer\TimeDomainFilter\staticpointsfilter\staticpointsfiltersettings.h \
+		Analyzer\TimeDomainFilter\pointsfilter_common.h \
+		C:\Qt\5.12.1\msvc2017\include\QtCore\QPoint \
 		Analyzer\backgroundanalyzer.h \
 		Analyzer\rectsubtractor.h \
 		Analyzer\Binarizator\binarizatorsettingsform.h \
 		Analyzer\Binarizator\colorselector.h \
 		Analyzer\trackdetector.h \
+		Analyzer\branchselector.h \
 		Analyzer\branch.h \
 		Analyzer\trackdetectorsettings.h \
-		Analyzer\branchselector.h \
 		..\..\build\debug\Main\ui\ui_mainwindow.h
 
 ..\..\build\debug\Main\obj\qcustomplot.obj: qcustomplot.cpp qcustomplot.h \

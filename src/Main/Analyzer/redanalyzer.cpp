@@ -7,19 +7,15 @@ RedAnalyzer::RedAnalyzer(QObject *parent) : QObject(parent)
 
 Contours RedAnalyzer::getRedDotsCoordinate(const QFileInfoList &imagesInfo)
 {
-    std::vector<std::vector<cv::Point>> framePoints;
+    PointsPacks framePoints;
     for(const auto &imgInfo : imagesInfo){
         auto matImg = cv::imread(imgInfo.absoluteFilePath().toStdString());
         auto points = getPoints(matImg);
         framePoints.push_back(points);
         qDebug()<<imgInfo.fileName();
     }
-    int findedPoints = 0;
-    for(const auto &points : framePoints){
-        findedPoints += static_cast<int>(points.size());
-    }
-    qDebug()<<"Всего найдено точек" << findedPoints;
-    return framePoints;
+    PointsPacks resultFramePoints = timeFilter(framePoints);
+    return resultFramePoints;
 }
 
 
@@ -76,6 +72,51 @@ Contours RedAnalyzer::findNearbyContours(const Contour &contour, const Contours 
     return nearbyContours;
 }
 
+PointsPacks RedAnalyzer::timeFilter(const PointsPacks &points)
+{
+    az::FramePoints azFramePoints = cvPointsPacks2QPointsPack(points);
+    staticPointsFilter.run(azFramePoints);
+    auto filtredPoints = staticPointsFilter.filteredPoints();
+    std::vector<std::vector<cv::Point>> resultFramePoints = qPointsPack2cvPointsPack(filtredPoints);
+    return resultFramePoints;
+}
+
+std::vector<QPoint> RedAnalyzer::cvPoints2QPoints(const std::vector<cv::Point> &cvPoints)
+{
+    std::vector<QPoint> qPoints;
+    std::transform(cvPoints.begin(), cvPoints.end(), std::back_inserter(qPoints), [](const cv::Point &point){
+        return QPoint(point.x, point.y);
+    });
+    return qPoints;
+}
+
+std::vector<cv::Point> RedAnalyzer::qPoints2cvPoints(const std::vector<QPoint> &qPoints)
+{
+    std::vector<cv::Point> cvPoints;
+    std::transform(qPoints.begin(), qPoints.end(), std::back_inserter(cvPoints), [](const QPoint &point){
+        return cv::Point(point.x(), point.y());
+    });
+    return cvPoints;
+}
+
+std::vector<std::vector<QPoint> > RedAnalyzer::cvPointsPacks2QPointsPack(const std::vector<std::vector<cv::Point> > &cvPointsPack)
+{
+    std::vector<std::vector<QPoint>> qPointsPack;
+    std::transform(cvPointsPack.begin(), cvPointsPack.end(), std::back_inserter(qPointsPack), [this](const auto &pointPack){
+        return cvPoints2QPoints(pointPack);
+    });
+    return qPointsPack;
+}
+
+std::vector<std::vector<cv::Point> > RedAnalyzer::qPointsPack2cvPointsPack(const std::vector<std::vector<QPoint> > &qPointsPack)
+{
+   std::vector<std::vector<cv::Point>> cvPointsPack;
+   std::transform(qPointsPack.begin(), qPointsPack.end(), std::back_inserter(cvPointsPack), [this](const auto &pointPack){
+       return qPoints2cvPoints(pointPack);
+   });
+   return cvPointsPack;
+}
+
 Contours RedAnalyzer::filterArea(const Contours &contours)
 {
     std::vector<std::vector<cv::Point>> filtredContours;
@@ -118,7 +159,7 @@ cv::Mat RedAnalyzer::colorBinarize(const cv::Mat &src)
     ColorBinarizator colorBinarizator;
     ColorBinarizatorSettings colorBinarizatorSettings;
     {
-        HsvMargins margins(50, 70, 70);
+        HsvMargins margins(60, 80, 80);
         colorBinarizatorSettings.hsvMargin = margins;
         colorBinarizatorSettings.color = QColor::fromHsv(0, 100, 100);
     }
@@ -128,7 +169,7 @@ cv::Mat RedAnalyzer::colorBinarize(const cv::Mat &src)
 
 cv::Mat RedAnalyzer::normalBinarize(const cv::Mat &src)
 {
-    NormalBinarizator normalBinarizator(NormalBinarizatorSettings{128});
+    NormalBinarizator normalBinarizator(NormalBinarizatorSettings{100});
     return normalBinarizator.binarizeImage(src);
 }
 

@@ -21,34 +21,34 @@ SOURCES += \
     Analyzer/Binarizator/colorbinarizator.cpp \
     Analyzer/Binarizator/colorselector.cpp \
     Analyzer/Binarizator/normalbinarizator.cpp \
-    Analyzer/backgroundanalyzer.cpp \
-    Analyzer/branch.cpp \
-    Analyzer/branchselector.cpp \
+    Analyzer/TimeDomainFilter/staticpointsfilter.cpp \
+    Analyzer/TimeDomainFilter/staticpointsfilter/markedpoint.cpp \
+    Analyzer/TimeDomainFilter/staticpointsfilter/pointtrace.cpp \
+    Analyzer/TimeDomainFilter/staticpointsfilter/staticpointsfilterprivate.cpp \
+    Analyzer/TimeDomainFilter/staticpointsfilter/staticpointsfiltersettings.cpp \
     Analyzer/rectsubtractor.cpp \
     Analyzer/redanalyzer.cpp \
-    Analyzer/reddottimedomainfilter.cpp \
-    Analyzer/trackdetector.cpp \
     analyzersettingsform.cpp \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp
 
 HEADERS += \
-    Analyzer/AdvancePoint.h \
     Analyzer/Binarizator/binarizator.h \
     Analyzer/Binarizator/binarizatorsettingsform.h \
     Analyzer/Binarizator/binarizatorssettings.h \
     Analyzer/Binarizator/colorbinarizator.h \
     Analyzer/Binarizator/colorselector.h \
     Analyzer/Binarizator/normalbinarizator.h \
+    Analyzer/TimeDomainFilter/pointsfilter_common.h \
+    Analyzer/TimeDomainFilter/staticpointsfilter.h \
+    Analyzer/TimeDomainFilter/staticpointsfilter/markedpoint.h \
+    Analyzer/TimeDomainFilter/staticpointsfilter/pointtrace.h \
+    Analyzer/TimeDomainFilter/staticpointsfilter/staticpointsfilterprivate.h \
+    Analyzer/TimeDomainFilter/staticpointsfilter/staticpointsfiltersettings.h \
     Analyzer/backgroundanalyzer.h \
-    Analyzer/branch.h \
-    Analyzer/branchselector.h \
     Analyzer/rectsubtractor.h \
     Analyzer/redanalyzer.h \
-    Analyzer/reddottimedomainfilter.h \
-    Analyzer/trackdetector.h \
-    Analyzer/trackdetectorsettings.h \
     analyzersettingsform.h \
     mainwindow.h \
     qcustomplot.h
