@@ -2,7 +2,9 @@
 
 RedAnalyzer::RedAnalyzer(QObject *parent) : QObject(parent)
 {
-
+    auto settings = staticPointsFilter.settings();
+    settings.setMinPointTraceSize(50);
+    staticPointsFilter.setSettings(settings);
 }
 
 Contours RedAnalyzer::getRedDotsCoordinate(const QFileInfoList &imagesInfo)
@@ -14,7 +16,7 @@ Contours RedAnalyzer::getRedDotsCoordinate(const QFileInfoList &imagesInfo)
         framePoints.push_back(points);
         qDebug()<<imgInfo.fileName();
     }
-    PointsPacks resultFramePoints = timeFilter(framePoints);
+    PointsPacks resultFramePoints = timeFiltrate(framePoints);
     return resultFramePoints;
 }
 
@@ -72,7 +74,7 @@ Contours RedAnalyzer::findNearbyContours(const Contour &contour, const Contours 
     return nearbyContours;
 }
 
-PointsPacks RedAnalyzer::timeFilter(const PointsPacks &points)
+PointsPacks RedAnalyzer::timeFiltrate(const PointsPacks &points)
 {
     az::FramePoints azFramePoints = cvPointsPacks2QPointsPack(points);
     staticPointsFilter.run(azFramePoints);

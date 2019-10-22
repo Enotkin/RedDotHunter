@@ -2,7 +2,7 @@
 #define ANALYZERSETTINGSFORM_H
 
 #include <QWidget>
-#include "Analyzer/trackdetectorsettings.h"
+
 #include "Analyzer/redanalyzer.h"
 
 namespace Ui {

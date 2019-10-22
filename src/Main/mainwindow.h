@@ -15,7 +15,6 @@
 #include "Analyzer/Binarizator/normalbinarizator.h"
 #include "Analyzer/redanalyzer.h"
 #include "Analyzer/Binarizator/binarizatorsettingsform.h"
-#include "Analyzer/trackdetector.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -52,6 +51,8 @@ private:
     void displayImage(const QList<QFileInfo>::iterator &it);
 
     void setupPlot(QCustomPlot * const plot);
+
+    PointsPacks findDifferences(const PointsPacks &bigPack, const PointsPacks &lowPack);
 
     std::tuple<QVector<double>, QVector<double>, QVector<double>> separateGraphData(const std::vector<std::vector<cv::Point>> &data);
 

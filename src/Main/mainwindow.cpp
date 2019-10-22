@@ -16,28 +16,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_SelectFolderPushButton_clicked()
-{
-    if(imagesInfo.empty())
-        return;
-    analyzer.setSettings(ui->generalSettings->getSettings());
-    auto result = analyzer.getRedDotsCoordinate(imagesInfo);
-
-    auto [xData, yData, numbers] = separateGraphData(result);
-    ui->xPlot->xAxis->setRange(0, result.size());
-    ui->yPlot->xAxis->setRange(0, result.size());
-
-    ui->xPlot->graph(0)->addData(numbers, xData);
-
-    ui->yPlot->graph(0)->addData(numbers, yData);
-
-    ui->xPlot->replot();
-    ui->yPlot->replot();
-
-    ui->horizontalSlider->setRange(1, result.size());
-    ui->imageNumSpinBox->setRange(1, result.size());
-}
-
 std::tuple<QVector<double>, QVector<double>, QVector<double>> MainWindow::separateGraphData(const std::vector<std::vector<cv::Point> > &data)
 {
     QVector<double> xData, yData, commonData;
@@ -63,6 +41,7 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
     currentImgInfo = imagesInfo.begin() + value;
     displayImage(currentImgInfo);
 }
+
 
 void MainWindow::on_prevImagePushButton_clicked()
 {
@@ -136,7 +115,16 @@ void MainWindow::setupPlot(QCustomPlot * const plot)
 
 }
 
+PointsPacks MainWindow::findDifferences(const PointsPacks &bigPack, const PointsPacks &lowPack)
+{
+    int size = bigPack.size();
+    for (int index = 0; index < size; index++){
+        auto bigMiniPack = bigPack.at(index);
+        auto lowMiniPack = lowPack.at(index);
 
+    }
+    return PointsPacks();
+}
 
 void MainWindow::on_openFolderAction_triggered()
 {
@@ -158,4 +146,28 @@ void MainWindow::on_openFolderAction_triggered()
     ui->xPlot->replot();
     ui->yPlot->replot();
 
+}
+
+void MainWindow::on_SelectFolderPushButton_clicked()
+{
+    if(imagesInfo.empty())
+        return;
+    analyzer.setSettings(ui->generalSettings->getSettings());
+    auto resultDots = analyzer.getRedDotsCoordinate(imagesInfo);
+    auto result = analyzer.timeFiltrate(resultDots);
+    findDifferences(resultDots, result);
+
+    auto [xData, yData, numbers] = separateGraphData(result);
+    ui->xPlot->xAxis->setRange(0, result.size());
+    ui->yPlot->xAxis->setRange(0, result.size());
+
+    ui->xPlot->graph(0)->addData(numbers, xData);
+
+    ui->yPlot->graph(0)->addData(numbers, yData);
+
+    ui->xPlot->replot();
+    ui->yPlot->replot();
+
+    ui->horizontalSlider->setRange(1, result.size());
+    ui->imageNumSpinBox->setRange(1, result.size());
 }

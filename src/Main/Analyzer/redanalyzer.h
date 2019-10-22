@@ -34,6 +34,7 @@ public:
     explicit RedAnalyzer(QObject *parent = nullptr);
 
     Contours getRedDotsCoordinate(const QFileInfoList &imagesInfo);
+    PointsPacks timeFiltrate(const PointsPacks &points);
     Points getPoints(const cv::Mat &img);
 
     void setSettings(const RedAnalyzerSettings settings);
@@ -59,7 +60,7 @@ private:
     Contours filterNearbyContours(const Contours &normalContours, const Contours &colorContours);
     Contours filterArea(const Contours &contours);
     Contours findNearbyContours(const Contour &contour, const Contours &otherContours);
-    PointsPacks timeFilter(const PointsPacks &points);
+
 
     std::vector<QPoint> cvPoints2QPoints(const std::vector<cv::Point> &cvPoints);
     std::vector<cv::Point> qPoints2cvPoints(const std::vector<QPoint> &qPoints);

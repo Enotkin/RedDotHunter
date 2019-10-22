@@ -26,6 +26,7 @@ SOURCES += \
     Analyzer/TimeDomainFilter/staticpointsfilter/pointtrace.cpp \
     Analyzer/TimeDomainFilter/staticpointsfilter/staticpointsfilterprivate.cpp \
     Analyzer/TimeDomainFilter/staticpointsfilter/staticpointsfiltersettings.cpp \
+    Analyzer/backgroundanalyzer.cpp \
     Analyzer/rectsubtractor.cpp \
     Analyzer/redanalyzer.cpp \
     analyzersettingsform.cpp \

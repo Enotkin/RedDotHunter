@@ -21,10 +21,10 @@ AnalyzerSettingsForm::~AnalyzerSettingsForm()
 
 RedAnalyzerSettings AnalyzerSettingsForm::getSettings()
 {
-    TrackDetectorSettings trackSettings;
-    trackSettings.size = ui->areaSizeSpinBox->value();
-    trackSettings.delta = ui->distantSpinBox->value();
-    trackSettings.lifeTime = ui->lifeTimeSpinBox->value();
+//    TrackDetectorSettings trackSettings;
+//    trackSettings.size = ui->areaSizeSpinBox->value();
+//    trackSettings.delta = ui->distantSpinBox->value();
+//    trackSettings.lifeTime = ui->lifeTimeSpinBox->value();
 
     BinarizatorsSettings binarizatorSettings;
 
