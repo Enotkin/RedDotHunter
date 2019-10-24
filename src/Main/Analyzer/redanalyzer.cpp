@@ -16,8 +16,8 @@ Contours RedAnalyzer::getRedDotsCoordinate(const QFileInfoList &imagesInfo)
         framePoints.push_back(points);
         qDebug()<<imgInfo.fileName();
     }
-    PointsPacks resultFramePoints = timeFiltrate(framePoints);
-    return resultFramePoints;
+//    PointsPacks resultFramePoints = timeFiltrate(framePoints);
+    return framePoints;
 }
 
 

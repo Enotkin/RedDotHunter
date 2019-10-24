@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QTime>
+#include <QVector>
 
 #include <memory>
 #include "asmOpenCV.h"
@@ -45,14 +46,18 @@ private:
     Ui::MainWindow *ui;
     QFileInfoList imagesInfo;
     QList<QFileInfo>::iterator currentImgInfo = nullptr;
+    std::vector<QCustomPlot*> plots;
     RedAnalyzer analyzer;
 
     bool iteratorCheck(const QList<QFileInfo>::iterator &it);
     void displayImage(const QList<QFileInfo>::iterator &it);
 
     void setupPlot(QCustomPlot * const plot);
+    void setupGraph(QCPGraph * const graph, const QColor color);
+    std::vector<QPoint> cvPoints2QPoints(const std::vector<cv::Point> &cvPoints);
 
-    PointsPacks findDifferences(const PointsPacks &bigPack, const PointsPacks &lowPack);
+    PointsPacks findDifferences(const std::vector<Points> &bigPack, const std::vector<Points> &lowPack);
+    int countNoisesFrame(const std::vector<Points> &noiseFramePack);
 
     std::tuple<QVector<double>, QVector<double>, QVector<double>> separateGraphData(const std::vector<std::vector<cv::Point>> &data);
 
